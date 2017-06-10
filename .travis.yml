@@ -1,0 +1,17 @@
+language: cpp
+compiler:
+- gcc
+os:
+- linux
+deploy:
+  - provider: bintray
+  user: solvingj
+  key: 
+    secure: "aMSulufPlHfrTruKVLvyvr24xAlp/HqAIVDe5CUIsKK9IhP4/kZsFNLP6Suz1HWpHUykGFMUt/peRjGpmHhWLbN+pBT03zGnuHFeH0Gy2VpwfciDh8rhXXBcPKhXP08v02mk9k9X5CaZUJXCtI6QrM3LrKYggroeS9EypmwGbDwkpjDxJjt7g99vLomqXllEKQSs8tOCEDbZcjVlJqoXwtCDqlQfu05jdBPzJRCws7EJOeaWi2j6KlE39iRFYbTts4ezcnEiKllhEzyM1TqKxeDR05CdVaqBe2hYiSIudXWBDUhUE1MQ6ESnhF9HI7wZryyXmdbT25qjwtFWVjfkfMDGkIbHGVfz8y3Y36B8SSqtlkUkpg21YTy4USWwBw30TcGdou0/w6jCcf6/roFj0fcsR6OrG5t8DPIpWKYmxFd+RAODPPkLSJt/TQ/lG9TTLzR4EHXkJsDYPpuMLmbPJUbI+z8zzEhpcWFafxrZI+IEb+1PJn1b7kL2UHIz7Q+ZzhFsdCP7iownikOfKx9LIqOr/jjRI2IwPLOIpvUG7rET4Yuue9GVMgGOU7xJgs9js2o/I94wCZa5SITOo79PPmFrnMnc1izv/TDBy6eDxrXRACkY7R8ShVx+IzKFRXX6VrMb8k44FPUfrs9oFNNvEHpQ/NC0MQ0Gotu2VPfyjqE="
+  file: bintray-rpm.json
+  version: 
+     name: 0.0.1
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master

@@ -1,0 +1,29 @@
+version: 0.0.1
+branches:
+  only:
+    - master
+ 
+skip_non_tags: true
+
+image: Visual Studio 2015
+ 
+environment:
+  matrix:
+     - GENERATOR: "Visual Studio 14"
+       CONFIG: Release
+  
+build_script:
+  - md build
+  - cd build
+  - cmake -G "Visual Studio 14 2015 Win64" ..
+  - cmake --build . --config Release
+ 
+#deploy:
+#  provider: NuGet
+#  server: https://api.bintray.com/nuget/solvingj/public-nuget
+#  api_key:
+#    secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
+#  skip_symbols: false
+#  symbol_server:           # remove to push symbols to SymbolSource.org
+#  artifact: /.*\.nupkg/
+  
