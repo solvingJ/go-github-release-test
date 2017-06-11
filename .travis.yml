@@ -3,6 +3,15 @@ compiler:
 - gcc
 os:
 - linux
+addons:
+  apt:
+    packages:
+    - cmake
+    - ninja
+ 
+script:
+- cmake -G "Ninja"
+- ninja -j4
 deploy:
   - provider: bintray
     user: solvingj
