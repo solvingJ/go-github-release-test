@@ -3,9 +3,6 @@ PREBUMP=
   git pull origin master
 
 PREVERSION=
-  go vet ./...
-  go fmt ./...
-  go run main.go
   changelog finalize --version !newversion!
   git commit change.log -m "changelog: !newversion!"
   emd gen -in README.e.md > README.md
@@ -16,6 +13,3 @@ PREVERSION=
 POSTVERSION=
   git push
   git push --tags
-  gh-api-cli create-release -n release -o USER -r dummy \
-   --ver !newversion!  --draft !isprerelease! \
-   -c "changelog ghrelease --version !newversion!"
