@@ -7,5 +7,7 @@ addons:
   apt:
     packages:
     - cmake
+    - go-bin-deb
 before_script: cmake src
 script: make
+after_script: go-bin-deb generate --file bintray-deb.json
