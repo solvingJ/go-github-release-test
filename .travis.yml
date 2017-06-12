@@ -8,7 +8,6 @@ addons:
     packages:
     - cmake
     - ninja
- 
 script:
 - cmake -G "Ninja"
 - ninja -j4
