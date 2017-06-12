@@ -9,8 +9,9 @@ addons:
     - cmake
     - ninja
 script:
-- cmake -G "Ninja"
-- ninja -j4
+  - mkdir build
+  - cd build
+  - cmake .. && make
 deploy:
   - provider: bintray
     user: solvingj
