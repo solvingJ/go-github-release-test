@@ -8,10 +8,11 @@ addons:
     packages:
     - cmake
     - ninja
-script:
+before_script:
   - mkdir build
   - cd build
-  - cmake .. && make
+  - cmake .. 
+script: make
 deploy:
   - provider: bintray
     user: solvingj
