@@ -10,5 +10,5 @@ addons:
 before_script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake
 script: make
