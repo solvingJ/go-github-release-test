@@ -17,7 +17,7 @@ deploy:
   - provider: bintray
     user: solvingj
     key: 
-    secure: "j2jbaaRVHjFmUp+7xanz4VJCgpAgtZIgIfNjBsE7B+THynf2O2IGqxtm/G5wXO/47/mnEv82yUPfy+/BkcCna4cUB5ngNHUt07tOh8XY4SysgcIT76G3YmjXQjMXHv4qeaME+WmVrscju2aRGqYIS0+nyC4lEIVGatY8j8IlQhOCmP0NgD6tw1m8+g+QrNmD9uPNU19QP/kWuEeNO6Jg1jbIEdyqH8RtnZh6SnP241Jr5B2pUWgk8P3XvyXI1dqCjwj3cus2CgSewJwj07FFyslzlyeI0ToDFwDaUuf++M/5olM+Tt1c8BT5PzSdFt6q0RE1IlQmZ/whu0YN/rmj3w/sjuDtnLJjKGS4oKtbeArsplchSd+oHxZHT0w5WH2EpobTn6EYv1J/K0fvxMHAD+550GkpsiesEJM+UjQ7XDPgZCc5OseOXeHxiORNudY5yvWNIaK26ApHxfJVvdT5g39C6A1msz8OqJ3wBoZlrwp6Lg98vv/caHFqDUm+Hr/rOVZFy9zmh2qgXhyqxplHCQjQ4EL441kGkKrF1Y4bLvZaMkWTkqvyQrNttIlZSYCvR0xXwatLW7CDilrFQVyELBjLkZaDfIY03aMm+xHc3gvmPlGm3N7NM1jqsE+WPj8TVDYNSBXi2R56JnmYVW44PL2bzGUTbLI/7qbNHJ+bc+c="
+      secure: "j2jbaaRVHjFmUp+7xanz4VJCgpAgtZIgIfNjBsE7B+THynf2O2IGqxtm/G5wXO/47/mnEv82yUPfy+/BkcCna4cUB5ngNHUt07tOh8XY4SysgcIT76G3YmjXQjMXHv4qeaME+WmVrscju2aRGqYIS0+nyC4lEIVGatY8j8IlQhOCmP0NgD6tw1m8+g+QrNmD9uPNU19QP/kWuEeNO6Jg1jbIEdyqH8RtnZh6SnP241Jr5B2pUWgk8P3XvyXI1dqCjwj3cus2CgSewJwj07FFyslzlyeI0ToDFwDaUuf++M/5olM+Tt1c8BT5PzSdFt6q0RE1IlQmZ/whu0YN/rmj3w/sjuDtnLJjKGS4oKtbeArsplchSd+oHxZHT0w5WH2EpobTn6EYv1J/K0fvxMHAD+550GkpsiesEJM+UjQ7XDPgZCc5OseOXeHxiORNudY5yvWNIaK26ApHxfJVvdT5g39C6A1msz8OqJ3wBoZlrwp6Lg98vv/caHFqDUm+Hr/rOVZFy9zmh2qgXhyqxplHCQjQ4EL441kGkKrF1Y4bLvZaMkWTkqvyQrNttIlZSYCvR0xXwatLW7CDilrFQVyELBjLkZaDfIY03aMm+xHc3gvmPlGm3N7NM1jqsE+WPj8TVDYNSBXi2R56JnmYVW44PL2bzGUTbLI/7qbNHJ+bc+c="
     file: deb-publish-data.json
     version: 
       name: 0.0.1
@@ -25,14 +25,14 @@ deploy:
     on:
       tags: true
       branch: master
-  - provider: bintray
-    user: solvingj
-    key: 
-    secure: "j2jbaaRVHjFmUp+7xanz4VJCgpAgtZIgIfNjBsE7B+THynf2O2IGqxtm/G5wXO/47/mnEv82yUPfy+/BkcCna4cUB5ngNHUt07tOh8XY4SysgcIT76G3YmjXQjMXHv4qeaME+WmVrscju2aRGqYIS0+nyC4lEIVGatY8j8IlQhOCmP0NgD6tw1m8+g+QrNmD9uPNU19QP/kWuEeNO6Jg1jbIEdyqH8RtnZh6SnP241Jr5B2pUWgk8P3XvyXI1dqCjwj3cus2CgSewJwj07FFyslzlyeI0ToDFwDaUuf++M/5olM+Tt1c8BT5PzSdFt6q0RE1IlQmZ/whu0YN/rmj3w/sjuDtnLJjKGS4oKtbeArsplchSd+oHxZHT0w5WH2EpobTn6EYv1J/K0fvxMHAD+550GkpsiesEJM+UjQ7XDPgZCc5OseOXeHxiORNudY5yvWNIaK26ApHxfJVvdT5g39C6A1msz8OqJ3wBoZlrwp6Lg98vv/caHFqDUm+Hr/rOVZFy9zmh2qgXhyqxplHCQjQ4EL441kGkKrF1Y4bLvZaMkWTkqvyQrNttIlZSYCvR0xXwatLW7CDilrFQVyELBjLkZaDfIY03aMm+xHc3gvmPlGm3N7NM1jqsE+WPj8TVDYNSBXi2R56JnmYVW44PL2bzGUTbLI/7qbNHJ+bc+c="
-    file: rpm-publish-data.json
-    version: 
-      name: 0.0.1
-    skip_cleanup: true
-    on:
-      tags: true
-      branch: master
+#  - provider: bintray
+#    user: solvingj
+#    key: 
+#      secure: "j2jbaaRVHjFmUp+7xanz4VJCgpAgtZIgIfNjBsE7B+THynf2O2IGqxtm/G5wXO/47/mnEv82yUPfy+/BkcCna4cUB5ngNHUt07tOh8XY4SysgcIT76G3YmjXQjMXHv4qeaME+WmVrscju2aRGqYIS0+nyC4lEIVGatY8j8IlQhOCmP0NgD6tw1m8+g+QrNmD9uPNU19QP/kWuEeNO6Jg1jbIEdyqH8RtnZh6SnP241Jr5B2pUWgk8P3XvyXI1dqCjwj3cus2CgSewJwj07FFyslzlyeI0ToDFwDaUuf++M/5olM+Tt1c8BT5PzSdFt6q0RE1IlQmZ/whu0YN/rmj3w/sjuDtnLJjKGS4oKtbeArsplchSd+oHxZHT0w5WH2EpobTn6EYv1J/K0fvxMHAD+550GkpsiesEJM+UjQ7XDPgZCc5OseOXeHxiORNudY5yvWNIaK26ApHxfJVvdT5g39C6A1msz8OqJ3wBoZlrwp6Lg98vv/caHFqDUm+Hr/rOVZFy9zmh2qgXhyqxplHCQjQ4EL441kGkKrF1Y4bLvZaMkWTkqvyQrNttIlZSYCvR0xXwatLW7CDilrFQVyELBjLkZaDfIY03aMm+xHc3gvmPlGm3N7NM1jqsE+WPj8TVDYNSBXi2R56JnmYVW44PL2bzGUTbLI/7qbNHJ+bc+c="
+#    file: rpm-publish-data.json
+#    version: 
+#      name: 0.0.1
+#    skip_cleanup: true
+#    on:
+#      tags: true
+#      branch: master
