@@ -1,7 +1,7 @@
 {
 	"package": {
 		"name": "go-github-release-test",
-		"repo": "public-deb",
+		"repo": "public-rpm",
 		"subject": "solvingj",
 		"desc": "Package deployment pipeline test package",
 		"website_url": "http://solvingj.github.io",
@@ -10,19 +10,13 @@
 		"licenses": ["MIT"]
 	},
 	"version": {
-		"name": "project.version",
+		"name": "0.0.1",
 		"desc": "Beta version"
 	},
 	"files":
 	[{
-			"includePattern": "build/bin/(.\deb)",
-			"uploadPattern": "$1",
-			"matrixParams": {
-				"deb_distribution": "unstable",
-				"deb_component": "main",
-				"deb_architecture": "any",
-				"override": 1
-			}
+			"includePattern": "build/bin/(*.rpm)",
+			"uploadPattern": "$1"
 		}
 	],
 	"publish": true

@@ -1,0 +1,23 @@
+{
+  "name": "go-github-release-test",
+  "maintainer": "Jerry Wiltse <jerrywiltse@gmail.com>",
+  "description": "Test of go-github-release process",
+  "changelog-cmd": "changelog debian --vars='{\"name\":\"!name!\"}'",
+  "homepage": "http://github.com/solvingj/go-github-release-test",
+  "files": [
+    {
+      "from": "build/!name!",
+      "to": "/usr/bin",
+      "base": "build",
+      "fperm": "0755"
+    }
+  ],
+  "copyrights": [
+    {
+      "files": "*",
+      "copyright": "2017 Jerry Wiltse",
+      "license": "MIT",
+      "file": "LICENSE"
+    }
+  ]
+}

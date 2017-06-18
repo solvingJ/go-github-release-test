@@ -5,25 +5,34 @@ branches:
  
 skip_non_tags: true
 
-image: Visual Studio 2015
+image: Visual Studio 2017
  
 environment:
-  matrix:
-     - GENERATOR: "Visual Studio 14"
-       CONFIG: Release
-  
+  MSVC_DEFAULT_OPTIONS: ON
+  BOOST_ROOT: C:\Libraries\boost_1_63_0
+
+configuration:
+    - Release
+
+before_build:
+  - cmd: md build
+  - cmd: cd build
+  - cmd: if "%platform%"=="Win32" set CMAKE_GENERATOR_NAME=Visual Studio 15 2017
+  - cmd: if "%platform%"=="x64" set CMAKE_GENERATOR_NAME=Visual Studio 15 2017 Win64
+  - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" ../src
+
 build_script:
-  - md build
-  - cd build
-  - cmake -G "Visual Studio 14 2015 Win64" ..
-  - cmake --build . --config Release
- 
-#deploy:
-#  provider: NuGet
-#  server: https://api.bintray.com/nuget/solvingj/public-nuget
-#  api_key:
-#    secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
-#  skip_symbols: false
-#  symbol_server:           # remove to push symbols to SymbolSource.org
-#  artifact: /.*\.nupkg/
-  
+  - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION%
+
+deploy:
+  - provider: BinTray
+    username: solvingj
+    api_key:
+       secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
+    override: true
+    subject: solvingj
+    repo: public-generic
+    package: %APPVEYOR_PROJECT_NAME%
+    version: %APPVEYOR_REPO_TAG_NAME%
+    publish: true
+    explode: false

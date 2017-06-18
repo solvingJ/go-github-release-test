@@ -10,12 +10,12 @@
 		"licenses": ["MIT"]
 	},
 	"version": {
-		"name": "project.version",
+		"name": "0.0.1",
 		"desc": "Beta version"
 	},
 	"files":
 	[{
-			"includePattern": "build/bin/(.\rpm)",
+			"includePattern": "build/bin/(*.deb)",
 			"uploadPattern": "$1",
 			"matrixParams": {
 				"deb_distribution": "unstable",
