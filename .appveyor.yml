@@ -36,6 +36,6 @@ deploy:
     subject: solvingj
     repo: public-generic
     package: "%APPVEYOR_PROJECT_NAME%"
-    version: "%APPVEYOR_REPO_TAG_NAME%"
+    version: "0.0.1"
     publish: true
     explode: false
