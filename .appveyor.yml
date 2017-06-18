@@ -25,7 +25,7 @@ build_script:
   - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION%
 
 artifacts:
-  - path: "build/%CONFIGURATION%/%APPVEYOR_PROJECT_NAME%.exe"
+  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME).exe"
   
 deploy:
   - provider: BinTray
