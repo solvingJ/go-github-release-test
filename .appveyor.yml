@@ -32,7 +32,7 @@ deploy:
     override: true
     subject: solvingj
     repo: public-generic
-    package: %APPVEYOR_PROJECT_NAME%
-    version: %APPVEYOR_REPO_TAG_NAME%
+    package: "%APPVEYOR_PROJECT_NAME%"
+    version: "%APPVEYOR_REPO_TAG_NAME%"
     publish: true
     explode: false
