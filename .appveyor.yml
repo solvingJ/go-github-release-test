@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 branches:
   only:
     - master
@@ -21,7 +21,7 @@ build_script:
   - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION%
 
 artifacts:
-  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME).exe"
+  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(VERSION).exe"
   
 deploy:
   - provider: BinTray
@@ -32,6 +32,6 @@ deploy:
     subject: solvingj
     repo: public-generic
     package: "%APPVEYOR_PROJECT_NAME%"
-    version: "0.0.2"
+    version: "%VERSION%"
     publish: true
     explode: false
