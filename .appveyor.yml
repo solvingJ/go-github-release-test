@@ -18,7 +18,7 @@ before_build:
   - cmd: cmake -G "Visual Studio 15 2017" ../src
 
 build_script:
-  - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION%
+  - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION% /p:AssemblyName=$(APPVEYOR_PROJECT_NAME)-$(VERSION)
 
 artifacts:
   - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(VERSION).exe"
