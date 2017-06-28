@@ -2,30 +2,31 @@ version: 0.0.1
 branches:
   only:
     - master
-
 image: Visual Studio 2017
  
 environment:
   MSVC_DEFAULT_OPTIONS: ON
-  BOOST_ROOT: C:\Libraries\boost_1_63_0
 
 configuration:
     - Release
 
+install:
+  - cmd: SET ARCH "x86"
+    
 before_build:
+  - cmd: if "%ARCH%"=="x86" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017"
+  - cmd: if "%ARCH%"=="x64" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017 Win64"
+  - cmd: SET FILENAMES_PREFIX = %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_REPO_TAG_NAME%
   - cmd: md build
   - cmd: cd build
-  - cmd: echo "arch = %arch%"
-  - cmd: echo "platform = %platform%"
-  - cmd: if "%arch%"=="Win32" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017"
-  - cmd: if "%arch%"=="Win64" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017 Win64"
-  - cmd: cmake -G "Visual Studio 15 2017" ../src
+  - cmd: cmake -G  %CMAKE_GENERATOR_NAME% ../src
 
 build_script:
-  - cmd: msbuild ALL_BUILD.vcxproj /p:Configuration=%CONFIGURATION%
-
+  - cmd: msbuild /p:Configuration=%CONFIGURATION%
+  - cmd: go-msi make --path msi-creation-data.json --version %APPVEYOR_REPO_TAG_NAME% --msi %APPVEYOR_PROJECT_NAME%-i%ARCH%-%APPVEYOR_REPO_TAG_NAME%.msi
+  
 artifacts:
-  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME).exe"
+  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-%ARCH%.msi"
   
 deploy:
   - provider: BinTray
@@ -39,3 +40,7 @@ deploy:
     version: "0.0.1"
     publish: true
     explode: false
+    
+after_deploy:
+  - cmd: go-msi choco --input build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%.msi --version %APPVEYOR_REPO_TAG_NAME%
+  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_REPO_TAG_NAME%.nupkg

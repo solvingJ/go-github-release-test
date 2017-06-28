@@ -1,0 +1,24 @@
+{
+  "name": "go-github-release-test",
+  "summary": "Test of go-github-release process",
+  "description": "Test of go-github-release process",
+  "changelog-cmd": "changelog rpm",
+  "license": "LICENSE",
+  "url": "http://github.com/solvingj/go-github-release-test",
+  "files": [
+    {
+      "from": "build/!name!",
+      "to": "%{_bindir}/",
+      "base": "build",
+      "type": ""
+    }
+  ],
+  "copyrights": [
+    {
+      "files": "*",
+      "copyright": "2017 Jerry Wiltse",
+      "license": "MIT",
+      "file": "LICENSE"
+    }
+  ]
+}

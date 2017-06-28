@@ -1,0 +1,26 @@
+{
+	"package": {
+		"name": "go-github-release-test",
+		"repo": "public-generic",
+		"subject": "solvingj",
+		"desc": "Package deployment pipeline test package",
+		"website_url": "http://solvingj.github.io",
+		"issue_tracker_url": "https://github.com/solvingJ/go-github-release-test/issues",
+		"vcs_url": "https://github.com/solvingJ/go-github-release-test",
+		"licenses": ["MIT"]
+	},
+	"version": {
+		"name": "0.0.1",
+		"desc": "Beta version"
+	},
+	"files":
+	[{
+			"includePattern": "build/release/(*.msi)",
+			"uploadPattern": "$1",
+			"matrixParams": {
+				"override": 1
+			}
+		}
+	],
+	"publish": true
+}

@@ -1,0 +1,57 @@
+{
+  "product": "go-github-release-test",
+  "company": "solvingj",
+  "license": "LICENSE",
+  "upgrade-code": "81120514-3b2d-4a76-8d5a-da70f150addb",
+  "files": {
+    "guid": "053be675-f319-4890-a71f-1b71ae41d27b",
+    "items": [
+      "build/Release/go-github-release-test.exe"
+    ]	
+  },
+  "env": {
+    "guid": "0CB88C7F-85A7-4986-B6CE-1CAD5C17EA0E",
+    "vars": [
+      {
+        "name": "PATH",
+        "value": "[INSTALLDIR]",
+        "permanent": "no",
+        "system": "no",
+        "action": "set",
+        "part": "last"
+      }
+    ]
+  },
+  "shortcuts": {
+    "guid": "bc85a865-07b6-4891-8e83-2af2d6e54fe2",
+    "items": [
+      {
+        "name": "go-github-release-test",
+        "description": "Test of the easy msi pakage for Go",
+        "target": "[INSTALLDIR]\\go-github-release-test.exe",
+        "wdir": "INSTALLDIR",
+        "arguments": ""
+      }
+    ]
+  },
+  "choco": {
+    "description": "Easy way to generate msi package for a project",
+    "project-url": "http://github.com/solvingj/go-github-release-test",
+    "tags": "solvingj",
+    "license-url": "http://github.com/solvingj/go-github-release-test/blob/master/LICENSE"
+  },
+  "hooks": [
+    {
+      "command": "sc.exe create go-github-release-test-svc binPath=\"[INSTALLDIR]go-github-release-test.exe\" type=share start=auto DisplayName=\"go-github-release-test!\"",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe start go-github-release-test-svc",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe delete go-github-release-test-svc",
+      "when": "uninstall"
+    }
+  ]
+}
