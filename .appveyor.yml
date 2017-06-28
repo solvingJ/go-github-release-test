@@ -17,7 +17,8 @@ install:
 before_build:
   - cmd: if %ARCH%==x86 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017
   - cmd: if %ARCH%==x64 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017 Win64
-  - cmd: set FILENAMES_PREFIX=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%
+  - cmd: set MSINAME=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
+  - cmd: set NUPKGNAME=%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
   - cmd: md build
   - cmd: cd build
 
@@ -28,15 +29,18 @@ build_script:
   - cmd: go-msi make
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
-      --msi build/msi/%FILENAMES_PREFIX%.msi
+      --msi build/msi/%MSINAME%
   - cmd: go-msi choco
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
-      --input build/msi/%FILENAMES_PREFIX%.msi
+      --input build/msi/%MSINAME%
       
 artifacts:
-  - path: "build/msi/%FILENAMES_PREFIX%.msi"
-  
+  - path: "build/msi/%MSINAME%"
+    name: msi
+  - path: %NUPKGNAME%
+    name: nupkg
+    
 deploy:
   - provider: BinTray
     username: solvingj
@@ -63,4 +67,4 @@ deploy:
     
     
 #after_deploy:
-#  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
+#  - cmd: choco push -k="'%CHOCOKEY%'" %NUPKGNAME%
