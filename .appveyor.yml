@@ -2,6 +2,9 @@ image: Visual Studio 2017
  
 environment:
   MSVC_DEFAULT_OPTIONS: ON
+  environment:
+    CHOCOKEY:
+      secure: FWFxhYDT9wCj3hnjuM2IPZCYe4GssEuxD3UCynfUhzJL0I/3Fjbjeab0JYO6BmPz
 
 configuration:
   - Release
@@ -24,11 +27,18 @@ build_script:
   - cmd: cmake --build . --config %CONFIGURATION%
   - cmd: cd .. 
   - cmd: >-
-      go-msi make 
-      --path msi-creation-data.json 
-      --version %APPVEYOR_BUILD_VERSION% 
+      go-msi make
+      --path msi-creation-data.json
+      --version %APPVEYOR_BUILD_VERSION%
       --msi build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
  
+   - cmd: >-
+      go-msi choco
+      --path msi-creation-data.json
+      --version %APPVEYOR_BUILD_VERSION%
+      --input build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
+      --out build/%CONFIGURATION%/%FILENAMES_PREFIX%.nupkg
+      
 artifacts:
   - path: "build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi"
   
@@ -46,5 +56,5 @@ deploy:
     explode: false
     
     
-#after_deploy:
-#  - cmd: choco push -k="'%CHOCOKEY%'" build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%.%APPVEYOR_REPO_TAG_NAME%.nupkg
+after_deploy:
+  - cmd: choco push -k="'%CHOCOKEY%'" build/%CONFIGURATION%/%FILENAMES_PREFIX%.nupkg
