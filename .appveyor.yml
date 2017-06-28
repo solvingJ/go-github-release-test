@@ -38,7 +38,7 @@ build_script:
 artifacts:
   - path: "build/msi/%MSINAME%"
     name: msi
-  - path: %NUPKGNAME%
+  - path: "%NUPKGNAME%"
     name: nupkg
     
 deploy:
