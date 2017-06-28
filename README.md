@@ -1,1 +1,2 @@
-Generated readme didn't work, filling this in manually for the moment.
+Published Artifact can be found here: 
+https://bintray.com/solvingj/public-generic/go-github-release-test

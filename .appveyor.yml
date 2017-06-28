@@ -33,11 +33,11 @@ deploy:
     username: solvingj
     api_key:
        secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
-    override: true
     subject: solvingj
     repo: public-generic
     package: "%APPVEYOR_PROJECT_NAME%"
     version: "%APPVEYOR_BUILD_VERSION%"
+    override: true
     publish: true
     explode: false
     
