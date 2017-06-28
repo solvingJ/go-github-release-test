@@ -8,7 +8,7 @@ environment:
   MSVC_DEFAULT_OPTIONS: ON
 
 configuration:
-    - Release
+  - Release
 
 install:
   - cmd: SET ARCH "x86"
@@ -19,14 +19,14 @@ before_build:
   - cmd: SET FILENAMES_PREFIX = %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_REPO_TAG_NAME%
   - cmd: md build
   - cmd: cd build
-  - cmd: cmake -G  %CMAKE_GENERATOR_NAME% ../src
 
 build_script:
+  - cmd: cmake -G CMAKE_GENERATOR_NAME ../src
   - cmd: msbuild /p:Configuration=%CONFIGURATION%
   - cmd: go-msi make --path msi-creation-data.json --version %APPVEYOR_REPO_TAG_NAME% --msi %APPVEYOR_PROJECT_NAME%-i%ARCH%-%APPVEYOR_REPO_TAG_NAME%.msi
   
 artifacts:
-  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-%ARCH%.msi"
+  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(APPVEYOR_REPO_TAG_NAME).msi"
   
 deploy:
   - provider: BinTray
@@ -37,10 +37,9 @@ deploy:
     subject: solvingj
     repo: public-generic
     package: "%APPVEYOR_PROJECT_NAME%"
-    version: "0.0.1"
+    version: "%VERSION%"
     publish: true
     explode: false
     
-after_deploy:
-  - cmd: go-msi choco --input build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%.msi --version %APPVEYOR_REPO_TAG_NAME%
-  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_REPO_TAG_NAME%.nupkg
+#after_deploy:
+#  - cmd: choco push -k="'%CHOCOKEY%'" build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%.%APPVEYOR_REPO_TAG_NAME%.nupkg
