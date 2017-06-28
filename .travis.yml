@@ -12,7 +12,7 @@ addons:
     - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
     packages:
     - cmake
-
+    - go-bin-deb
 before_script: 
   - cmake src
   - "wget -O - https://raw.githubusercontent.com/mh-cbon/latest/master/source.sh | GH=mh-cbon/go-bin-deb sh -xe"
