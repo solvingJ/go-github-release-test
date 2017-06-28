@@ -26,14 +26,12 @@ build_script:
   - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" ../src
   - cmd: cmake --build . --config %CONFIGURATION%
   - cmd: cd .. 
-  - cmd: >-
-      go-msi make
+  - cmd: go-msi make
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
       --msi build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
- 
-   - cmd: >-
-      go-msi choco
+
+  - cmd: go-msi choco
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
       --input build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
