@@ -39,5 +39,19 @@
     "project-url": "http://github.com/solvingj/go-github-release-test",
     "tags": "solvingj",
     "license-url": "http://github.com/solvingj/go-github-release-test/blob/master/LICENSE"
-  }
+  },
+  "hooks": [
+    {
+      "command": "sc.exe create go-github-release-test-svc binPath=\"[INSTALLDIR]go-github-release-test.exe\" type=share start=auto DisplayName=\"go-github-release-test!\"",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe start go-github-release-test-svc",
+      "when": "install"
+    },
+    {
+      "command": "sc.exe delete go-github-release-test-svc",
+      "when": "uninstall"
+    }
+  ]
 }
