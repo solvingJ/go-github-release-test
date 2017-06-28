@@ -8,6 +8,7 @@ configuration:
 
 install:
   - cmd: set ARCH=x86
+  - cmd: choco install go-msi
     
 before_build:
   - cmd: if %ARCH%==x86 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017
