@@ -28,16 +28,16 @@ build_script:
   - cmd: go-msi make
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
-      --msi build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
+      --msi build/artifacts/%FILENAMES_PREFIX%.msi
 
   - cmd: go-msi choco
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
-      --input build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
-      --out build/%CONFIGURATION%
+      --input build/artifacts/%FILENAMES_PREFIX%.msi
+      --out build/artifacts
       
 artifacts:
-  - path: "build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi"
+  - path: "build/artifacts/%FILENAMES_PREFIX%.msi"
   
 deploy:
   - provider: BinTray
@@ -54,4 +54,4 @@ deploy:
     
     
 after_deploy:
-  - cmd: choco push -k="'%CHOCOKEY%'" build/%CONFIGURATION%/%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
+  - cmd: choco push -k="'%CHOCOKEY%'" build/artifacts/%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
