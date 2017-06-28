@@ -1,6 +1,4 @@
 sudo: required
-services:
-  - docker
 language: cpp
 compiler:
 - gcc
@@ -13,15 +11,19 @@ addons:
     packages:
     - cmake
     - go-bin-deb
+    
 before_script: 
-  - cmake src
-  - "wget -O - https://raw.githubusercontent.com/mh-cbon/latest/master/source.sh | GH=mh-cbon/go-bin-deb sh -xe"
-  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=mh-cbon/$APP sh -xe
-  
-script: make
+  - mkdir build
+  - cd build
+
+script: 
+  - cmake ../src
+  - cmake --build . --config release
+ 
 after_script: 
+  - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
-  - go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1
+  
 deploy:
   - provider: bintray
     user: solvingj
