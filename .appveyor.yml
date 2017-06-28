@@ -1,7 +1,5 @@
-version: 0.0.1
-branches:
-  only:
-    - master
+version: %APPVEYOR_REPO_TAG_NAME%
+
 image: Visual Studio 2017
  
 environment:
