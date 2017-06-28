@@ -2,9 +2,8 @@ image: Visual Studio 2017
  
 environment:
   MSVC_DEFAULT_OPTIONS: ON
-  environment:
-    CHOCOKEY:
-      secure: FWFxhYDT9wCj3hnjuM2IPZCYe4GssEuxD3UCynfUhzJL0I/3Fjbjeab0JYO6BmPz
+  CHOCOKEY:
+    secure: FWFxhYDT9wCj3hnjuM2IPZCYe4GssEuxD3UCynfUhzJL0I/3Fjbjeab0JYO6BmPz
 
 configuration:
   - Release
