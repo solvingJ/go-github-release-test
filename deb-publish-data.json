@@ -15,7 +15,7 @@
 	},
 	"files":
 	[{
-			"includePattern": "build/bin/(*.deb)",
+			"includePattern": "build/deb/(*.deb)",
 			"uploadPattern": "$1",
 			"matrixParams": {
 				"deb_distribution": "unstable",
