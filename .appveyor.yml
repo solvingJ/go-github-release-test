@@ -7,19 +7,19 @@ configuration:
   - Release
 
 install:
-  - cmd: SET ARCH="x86"
+  - cmd: set ARCH=x86
     
 before_build:
   - cmd: if %ARCH%==x86 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017
   - cmd: if %ARCH%==x64 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017 Win64
-  - cmd: SET FILENAMES_PREFIX=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_REPO_TAG_NAME%
+  - cmd: set FILENAMES_PREFIX=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%
   - cmd: md build
   - cmd: cd build
 
 build_script:
   - cmd: cmake -G %CMAKE_GENERATOR_NAME% ../src
   - cmd: msbuild /p:Configuration=%CONFIGURATION%
-  - cmd: go-msi make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-$(APPVEYOR_BUILD_VERSION).msi
+  - cmd: go-msi make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
   
 artifacts:
   - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(APPVEYOR_BUILD_VERSION).msi"
