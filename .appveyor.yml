@@ -26,7 +26,7 @@ build_script:
   - cmd: go-msi make --path msi-creation-data.json --version %APPVEYOR_BUILD_VERSION% --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
  
 artifacts:
-  - path: "build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi"
+  - path: "%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi"
   
 deploy:
   - provider: BinTray
