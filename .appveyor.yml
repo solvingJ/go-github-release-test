@@ -30,7 +30,7 @@ build_script:
       --msi build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
  
 artifacts:
-  - path: "%FILENAMES_PREFIX%.msi"
+  - path: "build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi"
   
 deploy:
   - provider: BinTray
