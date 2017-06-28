@@ -19,10 +19,10 @@ before_build:
 build_script:
   - cmd: cmake -G CMAKE_GENERATOR_NAME ../src
   - cmd: msbuild /p:Configuration=%CONFIGURATION%
-  - cmd: go-msi make --path msi-creation-data.json --version %APPVEYOR_REPO_TAG_NAME% --msi %APPVEYOR_PROJECT_NAME%-i%ARCH%-%APPVEYOR_REPO_TAG_NAME%.msi
+  - cmd: go-msi make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-$(APPVEYOR_BUILD_VERSION).msi
   
 artifacts:
-  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(APPVEYOR_REPO_TAG_NAME).msi"
+  - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(APPVEYOR_BUILD_VERSION).msi"
   
 deploy:
   - provider: BinTray
@@ -33,7 +33,7 @@ deploy:
     subject: solvingj
     repo: public-generic
     package: "%APPVEYOR_PROJECT_NAME%"
-    version: "%VERSION%"
+    version: "%APPVEYOR_BUILD_VERSION%"
     publish: true
     explode: false
     
