@@ -34,7 +34,7 @@ build_script:
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
       --input build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi
-      --out build/%CONFIGURATION%/%FILENAMES_PREFIX%.nupkg
+      --out build/%CONFIGURATION%
       
 artifacts:
   - path: "build/%CONFIGURATION%/%FILENAMES_PREFIX%.msi"
@@ -54,4 +54,4 @@ deploy:
     
     
 after_deploy:
-  - cmd: choco push -k="'%CHOCOKEY%'" build/%CONFIGURATION%/%FILENAMES_PREFIX%.nupkg
+  - cmd: choco push -k="'%CHOCOKEY%'" build/%CONFIGURATION%/%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
