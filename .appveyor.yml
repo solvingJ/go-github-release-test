@@ -49,7 +49,18 @@ deploy:
     override: true
     publish: true
     explode: false
+  - provider: BinTray
+    username: solvingj
+    api_key:
+       secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
+    subject: solvingj
+    repo: public-nuget
+    package: "%APPVEYOR_PROJECT_NAME%"
+    version: "%APPVEYOR_BUILD_VERSION%"
+    override: true
+    publish: true
+    explode: false
     
     
-after_deploy:
-  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
+#after_deploy:
+#  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
