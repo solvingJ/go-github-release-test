@@ -1,3 +1,6 @@
+sudo: required
+services:
+  - docker
 language: cpp
 compiler:
 - gcc
@@ -5,12 +8,15 @@ os:
 - linux
 addons:
   apt:
+    sources:
+    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
     packages:
     - cmake
 
 before_script: 
   - cmake src
-  - "curl -L https://raw.githubusercontent.com/mh-cbon/latest/master/install.sh | GH=mh-cbon/go-bin-deb sh -xe"
+  - "wget -O - https://raw.githubusercontent.com/mh-cbon/latest/master/source.sh | GH=mh-cbon/go-bin-deb sh -xe"
+  - curl -L https://raw.githubusercontent.com/mh-cbon/go-bin-deb/master/create-pkg.sh | GH=mh-cbon/$APP sh -xe
   
 script: make
 after_script: 
@@ -25,9 +31,6 @@ deploy:
     version: 
       name: 0.0.1
     skip_cleanup: true
-    on:
-      tags: true
-      branch: master
 ##  - provider: bintray
 #    user: solvingj
 #    key: 
