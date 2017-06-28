@@ -20,7 +20,7 @@ before_build:
 build_script:
   - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" ../src
   - cmd: cmake --build . --config %CONFIGURATION%
-  - cmd: go-msi make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
+  - cmd: go-msi.exe make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
   
 artifacts:
   - path: "build/$(CONFIGURATION)/$(APPVEYOR_PROJECT_NAME)-$(APPVEYOR_BUILD_VERSION).msi"
@@ -37,6 +37,7 @@ deploy:
     version: "%APPVEYOR_BUILD_VERSION%"
     publish: true
     explode: false
+    
     
 #after_deploy:
 #  - cmd: choco push -k="'%CHOCOKEY%'" build/$(CONFIGURATION)/%APPVEYOR_PROJECT_NAME%-%ARCH%.%APPVEYOR_REPO_TAG_NAME%.nupkg
