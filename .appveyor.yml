@@ -29,12 +29,10 @@ build_script:
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
       --msi build/msi/%FILENAMES_PREFIX%.msi
-
   - cmd: go-msi choco
       --path msi-creation-data.json
       --version %APPVEYOR_BUILD_VERSION%
       --input build/msi/%FILENAMES_PREFIX%.msi
-      --out build/nupkg
       
 artifacts:
   - path: "build/msi/%FILENAMES_PREFIX%.msi"
@@ -54,4 +52,4 @@ deploy:
     
     
 after_deploy:
-  - cmd: choco push -k="'%CHOCOKEY%'" build/nupkg/%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
+  - cmd: choco push -k="'%CHOCOKEY%'" %APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
