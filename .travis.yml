@@ -7,8 +7,11 @@ addons:
   apt:
     packages:
     - cmake
-    - go-bin-deb
-before_script: cmake src
+
+before_script: 
+  - cmake src
+  - "curl -L https://raw.githubusercontent.com/mh-cbon/latest/master/install.sh | GH=mh-cbon/go-bin-deb sh -xe"
+  
 script: make
 after_script: 
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
