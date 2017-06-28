@@ -7,12 +7,12 @@ configuration:
   - Release
 
 install:
-  - cmd: SET ARCH "x86"
+  - cmd: SET ARCH="x86"
     
 before_build:
   - cmd: if "%ARCH%"=="x86" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017"
   - cmd: if "%ARCH%"=="x64" set CMAKE_GENERATOR_NAME="Visual Studio 15 2017 Win64"
-  - cmd: SET FILENAMES_PREFIX = %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_REPO_TAG_NAME%
+  - cmd: SET FILENAMES_PREFIX=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_REPO_TAG_NAME%
   - cmd: md build
   - cmd: cd build
 
