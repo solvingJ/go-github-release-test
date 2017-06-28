@@ -21,6 +21,7 @@ before_build:
 build_script:
   - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" ../src
   - cmd: cmake --build . --config %CONFIGURATION%
+  - cmd: cd ..
   - cmd: go-msi make --path msi-creation-data.json --version $(APPVEYOR_BUILD_VERSION) --msi %APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
  
 artifacts:
