@@ -44,6 +44,7 @@ artifacts:
 deploy:
   - provider: BinTray
     username: solvingj
+    artifact: msi
     api_key:
        secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
     subject: solvingj
@@ -55,6 +56,7 @@ deploy:
     explode: false
   - provider: BinTray
     username: solvingj
+    artifact: nupkg
     api_key:
        secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
     subject: solvingj
