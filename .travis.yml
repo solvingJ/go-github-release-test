@@ -11,6 +11,7 @@ addons:
     packages:
     - cmake
     - go-bin-deb
+    - changelog
     
 before_script: 
   - mkdir build
