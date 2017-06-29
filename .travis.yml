@@ -33,6 +33,7 @@ deploy:
     version: 
       name: 0.0.1
     skip_cleanup: true
+    branch: master
 ##  - provider: bintray
 #    user: solvingj
 #    key: 
