@@ -19,8 +19,6 @@ before_script:
 script: 
   - cmake ../src
   - cmake --build . --config release
- 
-after_script: 
   - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
   
