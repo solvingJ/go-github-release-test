@@ -10,6 +10,7 @@ addons:
     - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
     packages:
     - cmake
+    - fakeroot
     - go-bin-deb
     - changelog
     
