@@ -4,18 +4,13 @@ compiler:
 - gcc
 os:
 - linux
-#addons:
-#  apt:
-#    sources:
-#    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
-#    packages:
-#    - cmake
-#    - go-bin-deb
-install: 
-  - echo "deb https://dl.bintray.com/solvingj/public-deb unstable main" | sudo tee -a /etc/apt/sources.list > /dev/null
-  - cat /etc/apt/sources.list
-  - sudo -E apt-get -yq update &>> ~/apt-get-update.log
-  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install cmake go-bin-deb
+addons:
+  apt:
+    sources:
+    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
+    packages:
+    - cmake
+    - go-bin-deb
     
 before_script: 
   - mkdir build
