@@ -29,10 +29,7 @@ script:
   - cmake --build . --config release
   - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis_build_dir fedora /bin/sh -c 
-		"curl https://dl.bintray.com/solvingj/public-rpm/SolvingJ-Public-RPM.repo -o /etc/yum.repos.d/SolvingJ-Public-RPM.repo &&
-		cd /mnt/travis_build_dir && 
-		go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1"
+  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis_build_dir fedora /bin/sh -c "curl https://dl.bintray.com/solvingj/public-rpm/SolvingJ-Public-RPM.repo -o /etc/yum.repos.d/SolvingJ-Public-RPM.repo && cd /mnt/travis_build_dir && go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1"
   - sudo chown travis:travis *.rpm
   
 deploy:
