@@ -29,7 +29,7 @@ script:
   - cmake --build . --config release
   - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis_build_dir fedora /bin/sh -c fedora-create-rpm.sh
+  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis_build_dir fedora /bin/sh -c "sh ./fedora-create-rpm.sh"
  # - sudo chown travis:travis *.rpm
   
 deploy:
