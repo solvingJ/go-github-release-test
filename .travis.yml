@@ -1,11 +1,15 @@
 sudo: required
 language: cpp
+
 services:
-  - docker
+- docker
+
 compiler:
 - gcc
+
 os:
 - linux
+
 addons:
   apt:
     sources:
