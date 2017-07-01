@@ -11,11 +11,14 @@ os:
 - linux
 
 env:
-#Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
-- REPO_NAME=${TRAVIS_REPO_SLUG%/*}
-- PACKAGE_VERSION="0.0.1"
-- ARCH="amd64"
-- PACKAGENAME=${REPO_NAME}.${PACKAGE_VERSION}.rpm
+  global:
+  #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
+    - REPO_NAME=${TRAVIS_REPO_SLUG%/*}
+    - PACKAGE_VERSION="0.0.1"
+    - PACKAGENAME=${REPO_NAME}.${PACKAGE_VERSION}.rpm
+  matrix:
+    - ARCH="amd64"
+    - ARCH="i386"
 
 addons:
   apt:
