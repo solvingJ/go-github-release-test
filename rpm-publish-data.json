@@ -15,7 +15,7 @@
 	},
 	"files":
 	[{
-			"includePattern": "go-github-release-test/(.rpm)",
+			"includePattern": "/home/travis/build/solvingJ/go-github-release-test/(*.rpm)",
 			"uploadPattern": "$1"
 		}
 	],
