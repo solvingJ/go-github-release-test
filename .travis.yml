@@ -49,6 +49,8 @@ deploy:
     file: deb-publish-data.json
     version: 
       name: ${PKG_VERSION}
+    on:
+      all_branches: true
     skip_cleanup: true
     user: solvingj
     key: 
@@ -57,6 +59,8 @@ deploy:
     file: rpm-publish-data.json
     version: 
       name: ${PKG_VERSION}
+    on:
+      all_branches: true
     skip_cleanup: true
     user: solvingj
     key: 
