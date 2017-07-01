@@ -12,13 +12,13 @@ os:
 
 env:
   matrix:
-    - ARCH="amd64"
-    - ARCH="i386"
-  global:
+    - ARCH="amd64" PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}
+    - ARCH="i386" PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}
+
+    global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
-    - REPO_NAME=${TRAVIS_REPO_SLUG%/*}
+    - REPO_NAME=${TRAVIS_REPO_SLUG#/*}
     - PKG_VERSION="0.0.1"
-    - PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}
     - DEB_PKG_NAME=${PKG_NAME_PREFIX}.deb
     - RPM_PKG_NAME=${PKG_NAME_PREFIX}.rpm
 
