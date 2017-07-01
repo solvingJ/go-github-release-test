@@ -12,8 +12,8 @@ os:
 
 env:
   matrix:
-    - ARCH="amd64" PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}
-    - ARCH="i386" PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}
+    - ARCH="amd64" "PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}"
+    - ARCH="i386" "PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}"
 
     global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
