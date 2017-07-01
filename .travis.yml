@@ -12,8 +12,8 @@ os:
 
 env:
   matrix:
-    - ARCH="amd64" "PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}"
-    - ARCH="i386" "PKG_NAME_PREFIX=${REPO_NAME}-${ARCH}-${PKG_VERSION}"
+    - ARCH="amd64"
+    - ARCH="i386"
 
   global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
@@ -40,8 +40,8 @@ script:
   - cmake ../src
   - cmake --build . --config release
   - cd ..
-  - go-bin-deb generate --file deb-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${DEB_PKG_NAME}
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${RPM_PKG_NAME}"
+  - go-bin-deb generate --file deb-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}".deb
+  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}.rpm"
   - cd ${TRAVIS_BUILD_DIR}
   - ls
   # - sudo chown travis:travis *.rpm
