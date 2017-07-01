@@ -13,7 +13,7 @@ os:
 env:
   matrix:
     - ARCH="amd64"
-    - ARCH="i386"
+    #- ARCH="i386"
 
   global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
@@ -35,7 +35,9 @@ addons:
 before_script: 
   - mkdir build
   - cd build
-
+  - echo ${TRAVIS_REPO_SLUG#*/}
+  - echo ${TRAVIS_REPO_SLUG%/*}
+  
 script: 
   - cmake ../src
   - cmake --build . --config release
@@ -43,7 +45,6 @@ script:
   - go-bin-deb generate --file deb-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}.deb
   - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}.rpm"
   - cd ${TRAVIS_BUILD_DIR}
-  - ls
   # - sudo chown travis:travis *.rpm
   
 deploy:
