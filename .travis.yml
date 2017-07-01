@@ -10,6 +10,12 @@ compiler:
 os:
 - linux
 
+env:
+#Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
+- REPO_NAME=${TRAVIS_REPO_SLUG%/*}
+- PACKAGE_VERSION="0.0.1"
+- PACKAGENAME=${REPO_NAME}.${PACKAGE_VERSION}.rpm
+
 addons:
   apt:
     sources:
@@ -19,10 +25,7 @@ addons:
     - fakeroot
     - go-bin-deb
     - changelog
-
-install:
-  - curl "https://dl.bintray.com/solvingj/public-rpm/go-bin-rpm/go-bin-rpm-amd64-0.0.16.rpm" 
-    
+  
 before_script: 
   - mkdir build
   - cd build
@@ -32,26 +35,26 @@ script:
   - cmake --build . --config release
   - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version 0.0.1 --arch amd64
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1 --arch amd64 -o go-github-release-test-0.0.1-1.x86_64.rpm"
+  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1 --arch amd64 -o build/bin/go-github-release-test-0.0.1.x86_64.rpm"
  # - sudo chown travis:travis *.rpm
   
 deploy:
   - provider: bintray
-    user: solvingj
-    key: 
-      secure: "S/5a2/n2tfTid37QOmigtA5vc54mj1d54O3twYOgiGoN2IUHkwYWR0Wjzng/6/H2K+wAZo8Lyn7Mx/rZDkZttDHvmKXxEayeW9yyJRXnfFyXCI0kCoB0PkiaFMHScKc1JgloVGsdy35fq3k8YCfofY6FAxejT0woXQ6wFceUBcQm1VaY8/vW8j5umXPt1LzRXPiUEblzCC+KMv9YnogKiAc8T7hZCY9vK1KYlJBrdcP79udU1RnFrvS4lnMZCIDw5qcPOXRZN9lzdqQe5frsHCwOs75AaV2Bnrw5A29/Piv/oRyv/VJ85SXDJwzOmf4cHymdfrCYeT/Zkg7eYuUT6QV4ix+i/5cDsz3N82zigVZOJ+wqaEHTmqj4WbJdo8lLsGj0uCsZo5HDtPUJWgi5+w5k/ZI0HX6PTdwHb1PmCDx06vMXWD5SKwfwK/T49yjaY3vK6r7ppQvr+wQcEolUzDHZz+vhlwq18Xj5oekVbQZ+cg7vzyScFS5LUVdCkpvVd+3MkxTkG2AnyUtvp3TjmTCoOUGM9nfJxZu0dbqVyWRhIbV+W3TjsyVgL4BUedcPVLggtVYEe74HK1tkPe1ogEcRD42b6qo4kX641QiSWh+aH5LIRvbQNuRmJ8yTGb8NUI7XNZ2i2qb13cPbChTVrgy6G+9l6G0AFdok9xTxRmI="
-    file: deb-publish-data.json
-    version: 
-      name: 0.0.1
-    skip_cleanup: true
-    on: master
-  # - provider: bintray
-   # user: solvingj
-   # key: 
-     # secure: "S/5a2/n2tfTid37QOmigtA5vc54mj1d54O3twYOgiGoN2IUHkwYWR0Wjzng/6/H2K+wAZo8Lyn7Mx/rZDkZttDHvmKXxEayeW9yyJRXnfFyXCI0kCoB0PkiaFMHScKc1JgloVGsdy35fq3k8YCfofY6FAxejT0woXQ6wFceUBcQm1VaY8/vW8j5umXPt1LzRXPiUEblzCC+KMv9YnogKiAc8T7hZCY9vK1KYlJBrdcP79udU1RnFrvS4lnMZCIDw5qcPOXRZN9lzdqQe5frsHCwOs75AaV2Bnrw5A29/Piv/oRyv/VJ85SXDJwzOmf4cHymdfrCYeT/Zkg7eYuUT6QV4ix+i/5cDsz3N82zigVZOJ+wqaEHTmqj4WbJdo8lLsGj0uCsZo5HDtPUJWgi5+w5k/ZI0HX6PTdwHb1PmCDx06vMXWD5SKwfwK/T49yjaY3vK6r7ppQvr+wQcEolUzDHZz+vhlwq18Xj5oekVbQZ+cg7vzyScFS5LUVdCkpvVd+3MkxTkG2AnyUtvp3TjmTCoOUGM9nfJxZu0dbqVyWRhIbV+W3TjsyVgL4BUedcPVLggtVYEe74HK1tkPe1ogEcRD42b6qo4kX641QiSWh+aH5LIRvbQNuRmJ8yTGb8NUI7XNZ2i2qb13cPbChTVrgy6G+9l6G0AFdok9xTxRmI="
-    # file: rpm-publish-data.json
-   # version: 
-     # name: 0.0.1
-   # skip_cleanup: true
-   # on:
-     # branch: master
+  file: deb-publish-data.json
+  version: 
+    name: 0.0.1
+  skip_cleanup: true
+  on: master
+  user: solvingj
+  key: 
+    secure: "S/5a2/n2tfTid37QOmigtA5vc54mj1d54O3twYOgiGoN2IUHkwYWR0Wjzng/6/H2K+wAZo8Lyn7Mx/rZDkZttDHvmKXxEayeW9yyJRXnfFyXCI0kCoB0PkiaFMHScKc1JgloVGsdy35fq3k8YCfofY6FAxejT0woXQ6wFceUBcQm1VaY8/vW8j5umXPt1LzRXPiUEblzCC+KMv9YnogKiAc8T7hZCY9vK1KYlJBrdcP79udU1RnFrvS4lnMZCIDw5qcPOXRZN9lzdqQe5frsHCwOs75AaV2Bnrw5A29/Piv/oRyv/VJ85SXDJwzOmf4cHymdfrCYeT/Zkg7eYuUT6QV4ix+i/5cDsz3N82zigVZOJ+wqaEHTmqj4WbJdo8lLsGj0uCsZo5HDtPUJWgi5+w5k/ZI0HX6PTdwHb1PmCDx06vMXWD5SKwfwK/T49yjaY3vK6r7ppQvr+wQcEolUzDHZz+vhlwq18Xj5oekVbQZ+cg7vzyScFS5LUVdCkpvVd+3MkxTkG2AnyUtvp3TjmTCoOUGM9nfJxZu0dbqVyWRhIbV+W3TjsyVgL4BUedcPVLggtVYEe74HK1tkPe1ogEcRD42b6qo4kX641QiSWh+aH5LIRvbQNuRmJ8yTGb8NUI7XNZ2i2qb13cPbChTVrgy6G+9l6G0AFdok9xTxRmI="
+  - provider: bintray
+  file: rpm-publish-data.json
+  version: 
+    name: 0.0.1
+  skip_cleanup: true
+  on: master
+  user: solvingj
+  key: 
+    secure: "S/5a2/n2tfTid37QOmigtA5vc54mj1d54O3twYOgiGoN2IUHkwYWR0Wjzng/6/H2K+wAZo8Lyn7Mx/rZDkZttDHvmKXxEayeW9yyJRXnfFyXCI0kCoB0PkiaFMHScKc1JgloVGsdy35fq3k8YCfofY6FAxejT0woXQ6wFceUBcQm1VaY8/vW8j5umXPt1LzRXPiUEblzCC+KMv9YnogKiAc8T7hZCY9vK1KYlJBrdcP79udU1RnFrvS4lnMZCIDw5qcPOXRZN9lzdqQe5frsHCwOs75AaV2Bnrw5A29/Piv/oRyv/VJ85SXDJwzOmf4cHymdfrCYeT/Zkg7eYuUT6QV4ix+i/5cDsz3N82zigVZOJ+wqaEHTmqj4WbJdo8lLsGj0uCsZo5HDtPUJWgi5+w5k/ZI0HX6PTdwHb1PmCDx06vMXWD5SKwfwK/T49yjaY3vK6r7ppQvr+wQcEolUzDHZz+vhlwq18Xj5oekVbQZ+cg7vzyScFS5LUVdCkpvVd+3MkxTkG2AnyUtvp3TjmTCoOUGM9nfJxZu0dbqVyWRhIbV+W3TjsyVgL4BUedcPVLggtVYEe74HK1tkPe1ogEcRD42b6qo4kX641QiSWh+aH5LIRvbQNuRmJ8yTGb8NUI7XNZ2i2qb13cPbChTVrgy6G+9l6G0AFdok9xTxRmI="
+  
