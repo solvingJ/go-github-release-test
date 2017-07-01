@@ -42,7 +42,8 @@ script:
   - cd ..
   - go-bin-deb generate --file deb-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${DEB_PKG_NAME}
   - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${RPM_PKG_NAME}"
- # - sudo chown travis:travis *.rpm
+  - cd ${TRAVIS_BUILD_DIR}
+  # - sudo chown travis:travis *.rpm
   
 deploy:
   - provider: bintray
