@@ -13,7 +13,7 @@ os:
 env:
   matrix:
     - ARCH="amd64"
-    #- ARCH="i386"
+    - ARCH="i386"
 
   global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
