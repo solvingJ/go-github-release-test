@@ -19,6 +19,9 @@ addons:
     - fakeroot
     - go-bin-deb
     - changelog
+
+install:
+  - curl "https://dl.bintray.com/solvingj/public-rpm/go-bin-rpm/go-bin-rpm-amd64-0.0.16.rpm" 
     
 before_script: 
   - mkdir build
@@ -28,8 +31,8 @@ script:
   - cmake ../src
   - cmake --build . --config release
   - cd ..
-  - go-bin-deb generate --file deb-creation-data.json --version 0.0.1
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis_build_dir fedora /bin/sh -c "sh ./fedora-create-rpm.sh"
+  - go-bin-deb generate --file deb-creation-data.json --version 0.0.1 --arch amd64
+  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version 0.0.1 --arch amd64 -o go-github-release-test-0.0.1-1.x86_64.rpm"
  # - sudo chown travis:travis *.rpm
   
 deploy:

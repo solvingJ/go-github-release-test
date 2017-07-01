@@ -294,9 +294,13 @@ __pycache__/
 #Build Directory
 build
 
+# Generated build directory
+pkg-build
+
 # Generated Binary Packages for distribution
 *.msi
 *.rpm
 *.deb
 *.tar.gz
 *.nupkg
+

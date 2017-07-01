@@ -20,5 +20,9 @@
       "license": "MIT",
       "file": "LICENSE"
     }
+  ],
+  "requires": [
+	"rpm-build", 
+	"changelog"	
   ]
 }
