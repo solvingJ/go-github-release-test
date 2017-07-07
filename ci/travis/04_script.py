@@ -15,7 +15,7 @@ if PKG_TYPE == "DEB":
     "--arch " + ARCH +
     "-o " + PKG_NAME + ".deb")
   os.system(package_cmd)
-elif PKG_TYPE == "RPM"
+elif PKG_TYPE == "RPM":
   package_cmd=(
     "go-bin-rpm generate " +
     "--file rpm-creation-data.json " +
