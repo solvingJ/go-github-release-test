@@ -6,7 +6,7 @@ PKG_VERSION = os.environ['PKG_VERSION']
 PKG_TYPE = os.environ['PKG_TYPE']
 BUILD_DIR = os.environ['TRAVIS_BUILD_DIR']
 PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
-print PKG_NAME
+
 if PKG_TYPE == "DEB":
   package_cmd=(
     "go-bin-deb generate" +
@@ -15,7 +15,6 @@ if PKG_TYPE == "DEB":
     " --arch " + ARCH +
     " -o " + PKG_NAME + ".deb")
   os.system(package_cmd)
-  print package_cmd
 elif PKG_TYPE == "RPM":
   package_cmd=(
     "go-bin-rpm generate" +
