@@ -12,40 +12,21 @@ os:
 
 env:
   matrix:
-    - ARCH="amd64"
-    - ARCH="i386"
+    - PKG_TYPE=DEB ARCH="amd64"
+    - PKG_TYPE=DEB ARCH="i386"
+    - PKG_TYPE=RPM ARCH="x86_64"
+    - PKG_TYPE=RPM ARCH="i386"
 
   global:
   #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
     - REPO_NAME=${TRAVIS_REPO_SLUG#*/}
     - PKG_VERSION="0.0.1"
-    - DEB_PKG_NAME=${PKG_NAME_PREFIX}.deb
-    - RPM_PKG_NAME=${PKG_NAME_PREFIX}.rpm
 
-addons:
-  apt:
-    sources:
-    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
-    packages:
-    - cmake
-    - fakeroot
-    - go-bin-deb
-    - changelog
-  
-before_script: 
-  - mkdir build
-  - cd build
-  - echo ${TRAVIS_REPO_SLUG#*/}
-  - echo ${TRAVIS_REPO_SLUG%/*}
-  
-script: 
-  - cmake ../src
-  - cmake --build . --config release
-  - cd ..
-  - go-bin-deb generate --file deb-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}.deb
-  - docker run -v ${TRAVIS_BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "cd /mnt/travis && go-bin-rpm generate --file rpm-creation-data.json --version ${PKG_VERSION} --arch ${ARCH} -o ${REPO_NAME}-${ARCH}-${PKG_VERSION}.rpm"
-  - cd ${TRAVIS_BUILD_DIR}
-  # - sudo chown travis:travis *.rpm
+before_install: python ci/travis/01_before_install.py
+install: python ci/travis/02_install.py
+before_script: mkdir build && cd build && cmake ../src && cmake --build . --config release && cd ..
+script: python ci/travis/04_script.py
+after_script: cd ${TRAVIS_BUILD_DIR}
   
 deploy:
   - provider: bintray
@@ -54,6 +35,7 @@ deploy:
       name: ${PKG_VERSION}
     on:
       all_branches: true
+      condition: ${PKG_TYPE} = "DEB"
     skip_cleanup: true
     user: solvingj
     key: 
@@ -64,6 +46,7 @@ deploy:
       name: ${PKG_VERSION}
     on:
       all_branches: true
+      condition: ${PKG_TYPE} = "RPM"
     skip_cleanup: true
     user: solvingj
     key: 
