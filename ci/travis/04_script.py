@@ -1,11 +1,11 @@
 import os
 
-def REPO_NAME=os.environ['REPO_NAME']
-def ARCH=os.environ['ARCH']
-def PKG_VERSION=os.environ['PKG_VERSION']
-def PKG_TYPE=os.environ['PKG_TYPE']
-def BUILD_DIR=os.environ['TRAVIS_BUILD_DIR']
-def PKG_NAME=REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
+REPO_NAME=os.environ['REPO_NAME']
+ARCH=os.environ['ARCH']
+PKG_VERSION=os.environ['PKG_VERSION']
+PKG_TYPE=os.environ['PKG_TYPE']
+BUILD_DIR=os.environ['TRAVIS_BUILD_DIR']
+PKG_NAME=REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
 if PKG_TYPE == "DEB" ]:
   def deb_cmd=(
