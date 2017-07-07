@@ -13,6 +13,7 @@ os:
 env:
   matrix:
     - PKG_TYPE=DEB ARCH="all"
+    - PKG_TYPE=DEB ARCH="amd64"
     # - PKG_TYPE=DEB ARCH="i386"
     # - PKG_TYPE=RPM ARCH="x86_64"
     # - PKG_TYPE=RPM ARCH="i386"
