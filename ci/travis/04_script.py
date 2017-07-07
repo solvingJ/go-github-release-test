@@ -1,13 +1,13 @@
 import os
 
-REPO_NAME=os.environ['REPO_NAME']
-ARCH=os.environ['ARCH']
-PKG_VERSION=os.environ['PKG_VERSION']
-PKG_TYPE=os.environ['PKG_TYPE']
-BUILD_DIR=os.environ['TRAVIS_BUILD_DIR']
-PKG_NAME=REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
+REPO_NAME = os.environ['REPO_NAME']
+ARCH = os.environ['ARCH']
+PKG_VERSION = os.environ['PKG_VERSION']
+PKG_TYPE = os.environ['PKG_TYPE']
+BUILD_DIR = os.environ['TRAVIS_BUILD_DIR']
+PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
-if PKG_TYPE == "DEB" ]:
+if PKG_TYPE == "DEB":
   def deb_cmd=(
     "go-bin-deb generate "
     "--file deb-creation-data.json "
