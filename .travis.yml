@@ -22,17 +22,17 @@ env:
     - REPO_NAME=${TRAVIS_REPO_SLUG#*/}
     - PKG_VERSION="0.0.1"
 
-# addons:
-  # apt:
-    # sources:
-    # - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
-    # packages:
-    # - cmake
-    # - fakeroot
-    # - go-bin-deb
-    # - changelog
+addons:
+  apt:
+    sources:
+    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
+    packages:
+    - cmake
+    - fakeroot
+    - go-bin-deb
+    - changelog
     
-before_install: sudo python ci/travis/01_before_install.py
+#before_install: sudo python ci/travis/01_before_install.py
 install: sudo python ci/travis/02_install.py
 # before_script: mkdir build && cd build && cmake ../src && cmake --build . --config release && cd ..
 # script: python ci/travis/04_script.py
