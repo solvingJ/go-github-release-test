@@ -26,6 +26,11 @@ addons:
   apt:
     sources:
     - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
+    packages:
+    - cmake
+    - fakeroot
+    - go-bin-deb
+    - changelog
     
 # before_install: sudo python ci/travis/01_before_install.py
 install: sudo python ci/travis/02_install.py
