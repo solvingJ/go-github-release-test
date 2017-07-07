@@ -12,7 +12,7 @@ os:
 
 env:
   matrix:
-    - PKG_TYPE=DEB ARCH="amd64"
+    - PKG_TYPE=DEB ARCH="all"
     # - PKG_TYPE=DEB ARCH="i386"
     # - PKG_TYPE=RPM ARCH="x86_64"
     # - PKG_TYPE=RPM ARCH="i386"
@@ -22,7 +22,12 @@ env:
     - REPO_NAME=${TRAVIS_REPO_SLUG#*/}
     - PKG_VERSION="0.0.1"
 
-before_install: sudo python ci/travis/01_before_install.py
+addons:
+  apt:
+    sources:
+    - sourceline: deb https://dl.bintray.com/solvingj/public-deb unstable main
+    
+# before_install: sudo python ci/travis/01_before_install.py
 install: sudo python ci/travis/02_install.py
 # before_script: mkdir build && cd build && cmake ../src && cmake --build . --config release && cd ..
 # script: python ci/travis/04_script.py
