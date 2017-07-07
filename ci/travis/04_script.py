@@ -15,6 +15,7 @@ if PKG_TYPE == "DEB":
     "--arch " + ARCH +
     "-o " + PKG_NAME + ".deb")
   os.system(package_cmd)
+  print package_cmd
 elif PKG_TYPE == "RPM":
   package_cmd=(
     "go-bin-rpm generate " +
