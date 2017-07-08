@@ -15,7 +15,7 @@
 	},
 	"files":
 	[{
-			"includePattern": "/home/travis/build/solvingJ/go-github-release-test/(go-github-release-test-amd64-0.0.1.deb)",
+			"includePattern": "go-github-release-test\/(.*\.deb)",
 			"uploadPattern": "$1",
 			"matrixParams": {
 				"deb_distribution": "unstable",
