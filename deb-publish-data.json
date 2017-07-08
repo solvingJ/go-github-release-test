@@ -1,7 +1,7 @@
 {
 	"package": {
 		"name": "go-github-release-test",
-		"repo": "public-deb-test-2",
+		"repo": "public-deb-test",
 		"subject": "solvingj",
 		"desc": "Package deployment pipeline test package",
 		"website_url": "http://solvingj.github.io",
