@@ -3,42 +3,26 @@ image: Visual Studio 2017
 environment:
   MSVC_DEFAULT_OPTIONS: ON
   CHOCOKEY:
-    secure: FWFxhYDT9wCj3hnjuM2IPZCYe4GssEuxD3UCynfUhzJL0I/3Fjbjeab0JYO6BmPz
+    secure: 
+  PKG_VERSION: 0.0.1
+  matrix:
+    - ARCH: x86
+    - ARCH: x64
 
 configuration:
   - Release
 
 install:
-  - cmd: set ARCH=x86
   - cmd: choco install go-msi
-  - cmd: set PATH=C:\Program Files\go-msi\;%PATH%
-  - cmd: set PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%
     
-before_build:
-  - cmd: if %ARCH%==x86 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017
-  - cmd: if %ARCH%==x64 set CMAKE_GENERATOR_NAME=Visual Studio 15 2017 Win64
-  - cmd: set MSINAME=%APPVEYOR_PROJECT_NAME%-%ARCH%-%APPVEYOR_BUILD_VERSION%.msi
-  - cmd: set NUPKGNAME=%APPVEYOR_PROJECT_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
-  - cmd: md build
-  - cmd: cd build
+before_build: python 01_before_build.py
+build_script: python 02_build_script.py
+after_build: python 03_after_build.py 
 
-build_script:
-  - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" ../src
-  - cmd: cmake --build . --config %CONFIGURATION%
-  - cmd: cd .. 
-  - cmd: go-msi make
-      --path msi-creation-data.json
-      --version %APPVEYOR_BUILD_VERSION%
-      --msi build/msi/%MSINAME%
-  - cmd: go-msi choco
-      --path msi-creation-data.json
-      --version %APPVEYOR_BUILD_VERSION%
-      --input build/msi/%MSINAME%
-      
 artifacts:
-  - path: "build/msi/%MSINAME%"
+  - path: "build/msi/%MSI_NAME%"
     name: msi
-  - path: "%NUPKGNAME%"
+  - path: "%NUPKG_NAME%"
     name: nupkg
     
 deploy:
@@ -66,7 +50,16 @@ deploy:
     override: true
     publish: true
     explode: false
+  - provider: Chocolatey
+    username: solvingj
+    artifact: nupkg
+    api_key:
+       secure: FWFxhYDT9wCj3hnjuM2IPZCYe4GssEuxD3UCynfUhzJL0I/3Fjbjeab0JYO6BmPz
+    subject: solvingj
+    repo: public-nuget
+    package: "%APPVEYOR_PROJECT_NAME%"
+    version: "%APPVEYOR_BUILD_VERSION%"
+    override: true
+    publish: true
+    explode: false
     
-    
-#after_deploy:
-#  - cmd: choco push -k="'%CHOCOKEY%'" %NUPKGNAME%

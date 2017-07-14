@@ -25,9 +25,8 @@ env:
     
 before_install: sudo python ci/travis/01_before_install.py
 install: sudo python ci/travis/02_install.py
-before_script: mkdir build && cd build && cmake ../src && cmake --build . --config release && cd ..
-script: python ci/travis/04_script.py
-after_script: cd ${TRAVIS_BUILD_DIR}
+script: mkdir build && cd build && cmake ../src && cmake --build . --config release && cd ..
+after_script: sudo python ci/travis/04_script.py && cd ${TRAVIS_BUILD_DIR}
   
 deploy:
   - provider: bintray
