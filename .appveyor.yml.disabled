@@ -12,12 +12,10 @@ environment:
 configuration:
   - Release
 
-install:
-  - cmd: choco install go-msi
-    
-before_build: python 01_before_build.py
-build_script: python 02_build_script.py
-after_build: python 03_after_build.py 
+install:python ci/appveyor_pipeline.py -step_name install
+before_build: python ci/appveyor_pipeline.py -step_name before_build
+build_script: python ci/appveyor_pipeline.py -step_name build_script
+after_build: python ci/appveyor_pipeline.py -step_name after_build
 
 artifacts:
   - path: "build/msi/%MSI_NAME%"

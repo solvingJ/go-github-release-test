@@ -13,7 +13,6 @@ PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
 args = parser.parse_args()
-args.step_name()
 
 def before_install():
 	os.system("add-apt-repository 'deb https://dl.bintray.com/solvingj/public-deb unstable main'")
@@ -58,3 +57,5 @@ def after_deploy():
     
   os.system(deploy_cmd)
 
+# This actually executes the step, must be after all methods are defined.
+eval(args.step_name)
