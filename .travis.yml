@@ -26,5 +26,4 @@ env:
 before_install: sudo python ci/travis_pipeline.py -step_name before_install
 install: sudo python ci/travis_pipeline.py -step_name install
 script: sudo python ci/travis_pipeline.py -step_name script
-before_deploy: sudo python ci/travis_pipeline.py -step_name before_deploy
-after_deploy: sudo python ci/travis_pipeline.py -step_name deploy
+after_success: sudo python ci/travis_pipeline.py -step_name after_success

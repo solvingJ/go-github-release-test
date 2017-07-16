@@ -26,7 +26,7 @@ def script():
 	os.chdir("build")
 	os.system("cmake ../src && cmake --build . --config ${CONFIGURATION}")
 
-def before_deploy():
+def after_success():
 	os.system("curl -fL https://getcli.jfrog.io | sh")
 	
 	if PKG_TYPE == "DEB":
@@ -46,7 +46,6 @@ def before_deploy():
 		" -o " + PKG_NAME + ".rpm")
 	  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
  
-def after_deploy():
   deploy_cmd = (
     "jfrog bt upload" +
     " --user ${BINTRAY_USER}" +
