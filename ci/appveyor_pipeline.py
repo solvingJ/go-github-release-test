@@ -11,7 +11,6 @@ PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
 args = parser.parse_args()
-args.step_name()
 
 def before_build():
   GO_MSI_PATH = "C:\Program Files\go-msi"
@@ -61,3 +60,7 @@ def deploy_script():
     " --publish")
     
   os.system(deploy_cmd)
+
+  
+# This actually executes the step, must be after all methods are defined.
+exec(args.step_name + "()")

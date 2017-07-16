@@ -58,4 +58,4 @@ def after_deploy():
   os.system(deploy_cmd)
 
 # This actually executes the step, must be after all methods are defined.
-eval(args.step_name)
+exec(args.step_name + "()")
