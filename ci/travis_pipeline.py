@@ -22,12 +22,12 @@ def before_install():
 
 def install():
   os.system("apt-get update")
-  os.system("apt-get install --allow-unauthenticated fakeroot go-bin-deb changelog jfrog-cli")
+  os.system("apt-get install --allow-unauthenticated fakeroot go-bin-deb changelog")
 
 def script():
   os.system("mkdir build && cd build")
   os.chdir("build")
-  os.system("cmake ../src && cmake --build . --config ${CONFIGURATION}")
+  os.system("cmake ../src && cmake --build . --config " + CONFIGURATION)
 
 def after_success():
   package()
@@ -44,10 +44,10 @@ def deploy():
   os.system("curl -fL https://getcli.jfrog.io | sh")
   os.system("jfrog config --user ${BINTRAY_USER} --key ${BINTRAY_KEY} --license MIT")
   
-  deb_upload_suffix = " --deb ${PKG_NAME}.deb ${BINTRAY_REPO_DEB}"
-  rpm_upload_suffix = " ${PKG_NAME}.rpm ${BINTRAY_REPO_RPM}/${PKG_NAME}/${PKG_VERSION}"
-  targz_upload_suffix = " ${PKG_NAME}.tar.gz ${BINTRAY_REPO_TARGZ}/${PKG_NAME}/${PKG_VERSION}"
-  conan_upload_suffix = " ${PKG_NAME}.zip ${BINTRAY_REPO_CONAN}/${PKG_NAME}/${PKG_VERSION}"
+  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB
+  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
+  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
+  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
   
   upload_bintray(deb_upload_suffix)
   upload_bintray(rpm_upload_suffix)
@@ -59,9 +59,9 @@ def package_deb():
   package_cmd=(
   "go-bin-deb generate" +
   " --file deb-creation-data.json" +
-  " --version ${PKG_VERSION}"
-  " --arch ${ARCH}"
-  " -o ${PKG_NAME}.deb")
+  " --version " + PKG_VERSION
+  " --arch " + ARCH
+  " -o " + PKG_NAME + ".rpm")
   os.system(package_cmd)
     
 def package_rpm():
@@ -69,10 +69,10 @@ def package_rpm():
   package_cmd=(
   "go-bin-rpm generate" +
   " --file rpm-creation-data.json" +
-  " --version ${PKG_VERSION}"
-  " --arch ${ARCH}"
-  " -o ${PKG_NAME}.rpm")
-  os.system("docker run -v ${BUILD_DIR}/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c ${package_cmd}")
+  " --version " + PKG_VERSION
+  " --arch " + ARCH
+  " -o " + PKG_NAME + ".rpm")
+  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
@@ -81,8 +81,8 @@ def package_conan():
   print("No instructions for conan packaging yet")
     
 def upload_bintray(upload_suffix):
-  print("Uploading files to Bintray with suffix: ${upload_suffix}")
-  upload_prefix = "jfrog bt upload --override --publish"
+  print("Uploading files to Bintray with suffix: " + upload_suffix)
+  upload_prefix = "jfrog bt upload --override --publish "
   os.system(upload_prefix + upload_suffix)
     
 # This actually executes the step, must be after all methods are defined.
