@@ -2,11 +2,11 @@
   "name": "go-github-release-test",
   "maintainer": "Jerry Wiltse <jerrywiltse@gmail.com>",
   "description": "Test of go-github-release process",
-  "changelog-cmd": "changelog debian --vars='{\"name\":\"!name!\"}'",
+  "changelog-cmd": "changelog debian --out debianchangelog",
   "homepage": "http://github.com/solvingj/go-github-release-test",
   "files": [
     {
-      "from": "build/!name!",
+      "from": "build/go-github-release-test",
       "to": "/usr/bin",
       "base": "build",
       "fperm": "0755"
