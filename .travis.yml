@@ -23,8 +23,8 @@ env:
     - REPO_NAME=${TRAVIS_REPO_SLUG#*/}
     - PKG_VERSION="0.0.1"
     
-before_install: sudo python ci/travis_pipeline.py before_install
-install: sudo python ci/travis_pipeline.py install
-script: sudo python ci/travis_pipeline.py script
-before_deploy: sudo python ci/travis_pipeline.py before_deploy
-after_deploy: sudo python ci/travis_pipeline.py deploy
+before_install: sudo python ci/travis_pipeline.py -step_name before_install
+install: sudo python ci/travis_pipeline.py -step_name install
+script: sudo python ci/travis_pipeline.py -step_name script
+before_deploy: sudo python ci/travis_pipeline.py -step_name before_deploy
+after_deploy: sudo python ci/travis_pipeline.py -step_name deploy
