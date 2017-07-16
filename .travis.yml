@@ -12,15 +12,17 @@ os:
 
 env:
   matrix:
-    # - PKG_TYPE=DEB ARCH="all"
-    - PKG_TYPE=DEB ARCH="amd64"
-    # - PKG_TYPE=DEB ARCH="i386"
-    # - PKG_TYPE=RPM ARCH="x86_64"
-    # - PKG_TYPE=RPM ARCH="i386"
+    #ARCH="all"
+    ARCH="amd64"
+    ARCH="i386"
 
   global:
-  #Eventually change to  PACKAGE_VERSION=${TRAVIS_TAG}
-    - REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+    #Eventually change to PKG_VERSION=${TRAVIS_TAG}
+    - GIT_REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+    - BINTRAY_REPO_DEB="public-deb"
+    - BINTRAY_REPO_RPM="public-rpm"
+    - BINTRAY_REPO_TARGZ="public-targz"
+    - BINTRAY_REPO_CONAN="public-conan"
     - PKG_VERSION="0.0.1"
     
 before_install: sudo python ci/travis_pipeline.py -step_name before_install
