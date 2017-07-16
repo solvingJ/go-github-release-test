@@ -27,4 +27,4 @@ before_install: sudo python ci/ci_pipeline.py travis_before_install
 install: sudo python ci/ci_pipeline.py travis_install
 script: sudo python ci/ci_pipeline.py travis_script
 before_deploy: sudo python ci/ci_pipeline.py travis_before_deploy
-deploy: sudo python ci/ci_pipeline.py travis_deploy
+after_deploy: sudo python ci/ci_pipeline.py travis_deploy

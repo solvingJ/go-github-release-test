@@ -47,7 +47,7 @@ def before_deploy():
 		" -o " + PKG_NAME + ".rpm")
 	  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
  
-def deploy():
+def after_deploy():
   deploy_cmd = (
     "jfrog bt upload" +
     " --user ${BINTRAY_USER}" +

@@ -51,3 +51,13 @@ def after_build():
     " --output " + NUPKG_NAME
     
   os.system(nupkg_cmd)
+  
+def deploy_script():
+    deploy_cmd = (
+    "jfrog bt upload" +
+    " --user ${BINTRAY_USER}" +
+    " --key ${BINTRAY_KEY}" +
+    " --override" +
+    " --publish")
+    
+  os.system(deploy_cmd)
