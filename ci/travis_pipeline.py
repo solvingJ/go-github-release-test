@@ -15,45 +15,44 @@ parser.add_argument("-step_name")
 args = parser.parse_args()
 
 def before_install():
-	os.system("add-apt-repository 'deb https://dl.bintray.com/solvingj/public-deb unstable main'")
+  os.system("add-apt-repository 'deb https://dl.bintray.com/solvingj/public-deb unstable main'")
 
 def install():
-	os.system("apt-get update")
-	os.system("apt-get install --allow-unauthenticated fakeroot go-bin-deb changelog jfrog-cli")
+  os.system("apt-get update")
+  os.system("apt-get install --allow-unauthenticated fakeroot go-bin-deb changelog jfrog-cli")
 
 def script():
-	os.system("mkdir build && cd build")
-	os.chdir("build")
-	os.system("cmake ../src && cmake --build . --config ${CONFIGURATION}")
+  os.system("mkdir build && cd build")
+  os.chdir("build")
+  os.system("cmake ../src && cmake --build . --config ${CONFIGURATION}")
 
 def after_success():
-	os.system("curl -fL https://getcli.jfrog.io | sh")
-	
-	if PKG_TYPE == "DEB":
-	  package_cmd=(
-		"go-bin-deb generate" +
-		" --file deb-creation-data.json" +
-		" --version " + PKG_VERSION +
-		" --arch " + ARCH +
-		" -o " + PKG_NAME + ".deb")
-	  os.system(package_cmd)
-	elif PKG_TYPE == "RPM":
-	  package_cmd=(
-		"go-bin-rpm generate" +
-		" --file rpm-creation-data.json" +
-		" --version " + PKG_VERSION +
-		" --arch " + ARCH +
-		" -o " + PKG_NAME + ".rpm")
-	  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
+  os.system("curl -fL https://getcli.jfrog.io | sh")
+  
+  if PKG_TYPE == "DEB":
+    package_cmd=(
+    "go-bin-deb generate" +
+    " --file deb-creation-data.json" +
+    " --version " + PKG_VERSION +
+    " --arch " + ARCH +
+    " -o " + PKG_NAME + ".deb")
+    os.system(package_cmd)
+  elif PKG_TYPE == "RPM":
+    package_cmd=(
+    "go-bin-rpm generate" +
+    " --file rpm-creation-data.json" +
+    " --version " + PKG_VERSION +
+    " --arch " + ARCH +
+    " -o " + PKG_NAME + ".rpm")
+    os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
  
-  deploy_cmd = (
-    "jfrog bt upload" +
-    " --user ${BINTRAY_USER}" +
-    " --key ${BINTRAY_KEY}" +
-    " --override" +
-    " --publish" +
-    " --deb" if PKG_TYPE == "DEB" else "")
-    
+  deploy_cmd=(
+  "jfrog bt upload" +
+  " --user ${BINTRAY_USER}" +
+  " --key ${BINTRAY_KEY}" +
+  " --override" +
+  " --publish" +
+  " --deb" if PKG_TYPE == "DEB" else "")
   os.system(deploy_cmd)
 
 # This actually executes the step, must be after all methods are defined.
