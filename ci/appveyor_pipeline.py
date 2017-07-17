@@ -53,7 +53,8 @@ def deploy_script():
 
 def package_msi():
   print("Packaging MSI")
-  package_cmd= "go-msi make" + 
+  package_cmd=(
+  "go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi"
