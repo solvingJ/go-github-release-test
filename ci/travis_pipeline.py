@@ -44,10 +44,12 @@ def deploy():
   os.system("curl -fL https://getcli.jfrog.io | sh")
   os.system("./jfrog config --user ${BINTRAY_USER} --key ${BINTRAY_KEY} --license MIT")
   
-  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB
-  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
-  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
-  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
+  bintray_path = "/" + "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME
+  
+  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB + "/" + bintray_path
+  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + bintray_path
+  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_REPO_RPM + "/" + bintray_path
+  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_REPO_RPM + "/" + bintray_path
   
   upload_bintray(deb_upload_suffix)
   upload_bintray(rpm_upload_suffix)
