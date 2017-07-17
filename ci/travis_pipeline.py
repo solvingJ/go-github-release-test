@@ -45,7 +45,7 @@ def deploy():
   os.system("curl -fL https://getcli.jfrog.io | sh")
   os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   
-  bintray_path = "/" + "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME
+  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME + "/"
   
   deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB + "/" + bintray_path
   rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + bintray_path
