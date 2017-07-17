@@ -18,7 +18,6 @@ environment:
 configuration:
   - Release
 
-install: python ci/appveyor_pipeline.py -step_name install
 before_build: python ci/appveyor_pipeline.py -step_name before_build
 build_script: python ci/appveyor_pipeline.py -step_name build_script
 after_build: python ci/appveyor_pipeline.py -step_name after_build
