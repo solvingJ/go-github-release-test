@@ -11,6 +11,8 @@ os:
 - linux
 
 env:
+  secure: "dzsccmMITUpwSo2lcBbkj1L5rqpiU1VD8NGfwLNFU8jtIhnrRWJh67rgICCP3SGKjDlbIh/zrgkgs+7AZSss50x6N6rmjxEZisw7/mM3DboSVrogjQEnGZBrYvA08Ljc5B7FhTRIlQZzGoKa0yf1i/YqBbSLz9qhqWwdkVPNxn51Dej7wpnz4wgUrFfcpQpR4g9/Ibe/hYtDAEx+WlIG3jB1XgKDHkswuWZ5tyEIJceAQBWbdQswJejjLCQbRtcFV15STNuiqeXbjXyG95gyIhwMnlEjUIgyV3HOQfmU+PSRAXTJ6BFKfHOqr2a5JHszcN5VHh6iWpoZmQbfJL8oXW70oxDahSInMUGhAqt46qu9MkdT8IIUQ7xeO0lrHr+lD34lDVxb82oee5OZJuaeFhHUHREkpsYEtxRzWEvz4PCwibUVwoMxrKR+91n0xeLjy1ieXaPpmH/ODsbPJ3hkYzc7c+W03HvlnFs+26BMYuLPxrF0sU8O31iyVoYCSctxBxVmGLx9EgUl4HsNkO9Q+5Jzp3A8VsCr2OG8dtjFR0xtG4j00n3u0mk50Oi9ElTygXJ8o3tmBdoZTnDzQSZ0oQqZhxIr7hsLJACSnQG+bBKFWKzQwk26w2Z5bz+tn+4ObpQM6juxRrs2+q3xjzUrTvxydNYTQMvx707dKvhaXJs="
+
   matrix:
     #- ARCH="all"
     - ARCH="amd64"
