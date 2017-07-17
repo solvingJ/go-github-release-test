@@ -10,7 +10,6 @@ BINTRAY_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
 BINTRAY_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
 ARCH = os.environ["ARCH"]
 PKG_VERSION = os.environ["PKG_VERSION"]
-BUILD_DIR = os.environ["TRAVIS_BUILD_DIR"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
 parser = argparse.ArgumentParser()
@@ -77,7 +76,7 @@ def package_rpm():
   " -o " + PKG_NAME + ".rpm")
   
   print("RPM command : " + package_cmd)
-  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
+  os.system("docker run -v %cd%:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
