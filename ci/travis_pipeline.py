@@ -43,6 +43,7 @@ def package():
 def deploy():
   print("Downloading JFrog CLI")
   os.system("curl -fL https://getcli.jfrog.io | sh")
+  print("Configuring JFrog CLI with command: " + "./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   
   bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + REPO_NAME + "/"
@@ -78,6 +79,8 @@ def package_rpm():
   " -o " + PKG_NAME + ".rpm")
   
   print("RPM command : " + package_cmd)
+  print("RPM command : " + package_cmd)
+  
   os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   
 def package_targz():
