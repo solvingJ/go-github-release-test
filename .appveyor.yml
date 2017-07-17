@@ -8,9 +8,9 @@ environment:
   BINTRAY_REPO_NUGET : "public-nuget"
   BINTRAY_KEY: 
     secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
-	CHOCOKEY:
-    secure: ywiaCdFML29M2/iL/v1G36wPZSk4uIRcfJP56J7rDVPuQDwweuGqHZQPFWY8ZgbJ	
-  
+  CHOCOKEY:
+    secure: ywiaCdFML29M2/iL/v1G36wPZSk4uIRcfJP56J7rDVPuQDwweuGqHZQPFWY8ZgbJ  
+    
   matrix:
     - ARCH: x86
     - ARCH: x64
