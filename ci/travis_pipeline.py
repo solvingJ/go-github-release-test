@@ -4,6 +4,7 @@ import os, argparse, shared_pipeline
 
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["GIT_REPO_NAME"]
+BINTRAY_USER = os.environ["BINTRAY_USER"]
 BINTRAY_REPO_DEB = os.environ["BINTRAY_REPO_DEB"]
 BINTRAY_REPO_RPM = os.environ["BINTRAY_REPO_RPM"]
 BINTRAY_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
