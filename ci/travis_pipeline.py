@@ -61,7 +61,8 @@ def package_deb():
   " --file deb-creation-data.json" +
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
-  " -o " + PKG_NAME + ".rpm")
+  " -o " + PKG_NAME + ".deb")
+  print("DEB command : " + package_cmd)
   os.system(package_cmd)
     
 def package_rpm():
@@ -72,7 +73,9 @@ def package_rpm():
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
   " -o " + PKG_NAME + ".rpm")
-  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
+  
+  print("RPM command : " + package_cmd)
+  os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
