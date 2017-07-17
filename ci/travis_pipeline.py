@@ -77,10 +77,8 @@ def package_rpm():
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
   " -o " + PKG_NAME + ".rpm")
-  
-  print("RPM command : " + package_cmd)
-  print("RPM command : " + package_cmd)
-  
+  os.system("echo $PWD")
+  print("RPM command : " + "docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   
 def package_targz():
