@@ -58,7 +58,7 @@ def package_msi():
   "go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --msi " +  PKG_NAME + ".msi"
+  " --msi " +  PKG_NAME + ".msi")
   print("MSI command : " + package_cmd)
   os.system(package_cmd)
     
