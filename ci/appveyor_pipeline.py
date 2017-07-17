@@ -26,6 +26,8 @@ def before_build():
   elif ARCH == "x64":
     os.environ["CMAKE_GENERATOR_NAME"] = "Visual Studio 15 2017 Win64"
     
+  print("ARCH = " + ARCH)
+  print("GENERATOR NAME = " + os.environ["CMAKE_GENERATOR_NAME"])
   os.environ["PATH"] +=  os.pathsep + GO_MSI_PATH + os.pathsep + WIX_PATH
 
 def build_script():
