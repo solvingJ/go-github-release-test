@@ -78,7 +78,7 @@ def package_rpm():
   " -o " + PKG_NAME + ".rpm")
   
   print("RPM command : " + package_cmd)
-  os.system("docker run -v %cd%:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
+  os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
@@ -87,8 +87,8 @@ def package_conan():
   print("No instructions for conan packaging yet")
     
 def upload_bintray(upload_cmd_suffix):
-  print("Uploading files to Bintray with suffix: " + upload_cmd_suffix)
   upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  print("Uploading files to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
     
 # This actually executes the step, must be after all methods are defined.

@@ -72,12 +72,14 @@ def package_nupkg():
   os.system(package_cmd)
   
 def upload_bintray(upload_cmd_suffix):
-  print("Uploading files to Bintray with suffix: " + upload_cmd_suffix)
   upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  print("Uploading file to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
   
 def upload_choco():
   choco_upload_cmd = "choco push -k=" + CHOCO_KEY + " " + NUPKG_NAME
+  print("Uploading file to Chocolatey with command: " + choco_upload_cmd)
+  os.system(choco_upload_cmd)
   
 # This actually executes the step, must be after all methods are defined.
 exec(args.step_name + "()")
