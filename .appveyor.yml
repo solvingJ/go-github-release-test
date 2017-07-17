@@ -11,7 +11,6 @@ environment:
     secure: ebQ+n7tSPtW4Ou+GAbqv5pQZDtSMXq5xNGNvoGH7651g7bY0tOK5st1LWLo9Kept
   CHOCO_KEY:
     secure: ywiaCdFML29M2/iL/v1G36wPZSk4uIRcfJP56J7rDVPuQDwweuGqHZQPFWY8ZgbJ  
-    
   matrix:
     - ARCH: x86
     - ARCH: x64
