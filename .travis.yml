@@ -12,7 +12,7 @@ os:
 
 env:
   matrix:
-    #ARCH="all"
+    #- ARCH="all"
     - ARCH="amd64"
     - ARCH="i386"
 

@@ -59,8 +59,8 @@ def package_deb():
   package_cmd=(
   "go-bin-deb generate" +
   " --file deb-creation-data.json" +
-  " --version " + PKG_VERSION
-  " --arch " + ARCH
+  " --version " + PKG_VERSION + 
+  " --arch " + ARCH + 
   " -o " + PKG_NAME + ".rpm")
   os.system(package_cmd)
     
@@ -69,8 +69,8 @@ def package_rpm():
   package_cmd=(
   "go-bin-rpm generate" +
   " --file rpm-creation-data.json" +
-  " --version " + PKG_VERSION
-  " --arch " + ARCH
+  " --version " + PKG_VERSION + 
+  " --arch " + ARCH + 
   " -o " + PKG_NAME + ".rpm")
   os.system("docker run -v " + BUILD_DIR + "/:/mnt/travis solvingj/go-bin-rpm /bin/sh -c " + package_cmd)
   
