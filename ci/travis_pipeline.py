@@ -42,7 +42,7 @@ def package():
 def deploy():
   print("Downloading JFrog CLI")
   os.system("curl -fL https://getcli.jfrog.io | sh")
-  os.system("./jfrog config --user ${BINTRAY_USER} --key ${BINTRAY_KEY} --license MIT")
+  os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   
   bintray_path = "/" + "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME
   
