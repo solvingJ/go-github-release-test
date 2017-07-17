@@ -1,10 +1,14 @@
 import os, argparse
 
 # Please read pipeline_instructions.py before working on this file
-
-CONFIGURATION =  os.environ['CONFIGURATION']
+CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
+CHOCO_KEY = os.environ["CHOCO_KEY"]
+BINTRAY_USER = os.environ["BINTRAY_USER"]
+BINTRAY_KEY = os.environ["BINTRAY_KEY"]
+BINTRAY_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
+BINTRAY_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
@@ -22,45 +26,58 @@ def before_build():
     os.environ["CMAKE_GENERATOR_NAME"] = "Visual Studio 15 2017 Win64"
     
   os.environ["PATH"] +=  os.pathsep + GO_MSI_PATH + os.pathsep + WIX_PATH
-  os.environ["MSI_NAME"] = PKG_NAME + ".msi"
-  os.environ["NUPKG_NAME"] =  PKG_NAME + ".nupkg"
 
 def build_script():
-  GENERATOR_NAME = os.environ["CMAKE_GENERATOR_NAME"]
+  generator_name = os.environ["CMAKE_GENERATOR_NAME"]
   os.system("md build")
   os.chdir("build")
-  os.system("cmake -G ${GENERATOR_NAME} ../src")
+  os.system("cmake -G " + generator_name + " ../src")
   os.system("cmake --build . --config " + CONFIGURATION)
-  
-def after_build():
-  MSI_NAME = os.environ["MSI_NAME"]
-  NUPKG_NAME =  os.environ["NUPKG_NAME"]
-
-  msi_cmd = "go-msi make" + 
-    " --path msi-creation-data.json" +
-    " --version " + PKG_VERSION +
-    " --msi build/msi/ " MSI_NAME
-
-  os.system(msi_cmd)
-
-  nupkg_cmd = "go-msi choco" + 
-    " --path msi-creation-data.json" +
-    " --version " + PKG_VERSION +
-    " --input build/msi/ " MSI_NAME
-    " --output " + NUPKG_NAME
     
-  os.system(nupkg_cmd)
+def after_build():
+  package_msi()
+  package_nupkg() 
   
 def deploy_script():
-    deploy_cmd = (
-    "jfrog bt upload" +
-    " --user ${BINTRAY_USER}" +
-    " --key ${BINTRAY_KEY}" +
-    " --override" +
-    " --publish")
-    
-  os.system(deploy_cmd)
+  print("Downloading JFrog CLI")
+  os.system("curl -fL https://getcli.jfrog.io | sh")
+  os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
+  bintray_path = "/" + "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME
+  
+  msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_REPO_MSI + "/" + bintray_path
+  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_REPO_NUPKG + "/" + bintray_path
+  
+  upload_bintray(msi_upload_suffix)
+  upload_bintray(nupkg_upload_suffix)
+  #upload_choco()
 
+def package_msi():
+  print("Packaging MSI")
+  package_cmd= "go-msi make" + 
+  " --path msi-creation-data.json" +
+  " --version " + PKG_VERSION +
+  " --msi " +  PKG_NAME + ".msi"
+  print("MSI command : " + package_cmd)
+  os.system(package_cmd)
+    
+def package_nupkg():
+  print("Packaging NUPKG")
+  package_cmd=(
+  "go-msi choco" + 
+  " --path msi-creation-data.json" +
+  " --version " + PKG_VERSION +
+  " --input " + PKG_NAME + ".msi"
+  " --output " + PKG_NAME + ".nupkg")
+  print("NUPKG command : " + package_cmd)
+  os.system(package_cmd)
+  
+def upload_bintray(upload_cmd_suffix):
+  print("Uploading files to Bintray with suffix: " + upload_cmd_suffix)
+  upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  os.system(upload_cmd_prefix + upload_cmd_suffix)
+  
+def upload_choco():
+  choco_upload_cmd = "choco push -k=" + CHOCO_KEY + " " + NUPKG_NAME
   
 # This actually executes the step, must be after all methods are defined.
 exec(args.step_name + "()")

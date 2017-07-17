@@ -1,15 +1,16 @@
-import os, argparse, shared_pipeline
+import os, argparse
 
 # Please read pipeline_instructions.py before working on this file
 
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["GIT_REPO_NAME"]
+ARCH = os.environ["ARCH"]
 BINTRAY_USER = os.environ["BINTRAY_USER"]
+BINTRAY_KEY = os.environ["BINTRAY_KEY"]
 BINTRAY_REPO_DEB = os.environ["BINTRAY_REPO_DEB"]
 BINTRAY_REPO_RPM = os.environ["BINTRAY_REPO_RPM"]
 BINTRAY_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
 BINTRAY_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
-ARCH = os.environ["ARCH"]
 PKG_VERSION = os.environ["PKG_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
@@ -85,10 +86,10 @@ def package_targz():
 def package_conan():
   print("No instructions for conan packaging yet")
     
-def upload_bintray(upload_suffix):
-  print("Uploading files to Bintray with suffix: " + upload_suffix)
-  upload_prefix = "./jfrog bt upload --override --publish "
-  os.system(upload_prefix + upload_suffix)
+def upload_bintray(upload_cmd_suffix):
+  print("Uploading files to Bintray with suffix: " + upload_cmd_suffix)
+  upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  os.system(upload_cmd_prefix + upload_cmd_suffix)
     
 # This actually executes the step, must be after all methods are defined.
 exec(args.step_name + "()")

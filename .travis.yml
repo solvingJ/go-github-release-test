@@ -1,33 +1,26 @@
 sudo: required
 language: cpp
-
 services:
 - docker
-
 compiler:
 - gcc
-
 os:
 - linux
-
 env:
   matrix:
-    #- ARCH="all"
-    - ARCH="amd64"
-    - ARCH="i386"
-
+  - ARCH="amd64"
+  - ARCH="i386"
   global:
-    - BINTRAY_USER=solvingj
-    #Eventually change to PKG_VERSION=${TRAVIS_TAG}
-    - GIT_REPO_NAME=${TRAVIS_REPO_SLUG#*/}
-    - BINTRAY_REPO_DEB="public-deb"
-    - BINTRAY_REPO_RPM="public-rpm"
-    - BINTRAY_REPO_TARGZ="public-targz"
-    - BINTRAY_REPO_CONAN="public-conan"
-    - PKG_VERSION="0.0.1"
-    - secure: "dzsccmMITUpwSo2lcBbkj1L5rqpiU1VD8NGfwLNFU8jtIhnrRWJh67rgICCP3SGKjDlbIh/zrgkgs+7AZSss50x6N6rmjxEZisw7/mM3DboSVrogjQEnGZBrYvA08Ljc5B7FhTRIlQZzGoKa0yf1i/YqBbSLz9qhqWwdkVPNxn51Dej7wpnz4wgUrFfcpQpR4g9/Ibe/hYtDAEx+WlIG3jB1XgKDHkswuWZ5tyEIJceAQBWbdQswJejjLCQbRtcFV15STNuiqeXbjXyG95gyIhwMnlEjUIgyV3HOQfmU+PSRAXTJ6BFKfHOqr2a5JHszcN5VHh6iWpoZmQbfJL8oXW70oxDahSInMUGhAqt46qu9MkdT8IIUQ7xeO0lrHr+lD34lDVxb82oee5OZJuaeFhHUHREkpsYEtxRzWEvz4PCwibUVwoMxrKR+91n0xeLjy1ieXaPpmH/ODsbPJ3hkYzc7c+W03HvlnFs+26BMYuLPxrF0sU8O31iyVoYCSctxBxVmGLx9EgUl4HsNkO9Q+5Jzp3A8VsCr2OG8dtjFR0xtG4j00n3u0mk50Oi9ElTygXJ8o3tmBdoZTnDzQSZ0oQqZhxIr7hsLJACSnQG+bBKFWKzQwk26w2Z5bz+tn+4ObpQM6juxRrs2+q3xjzUrTvxydNYTQMvx707dKvhaXJs="
-    
-before_install: sudo python ci/travis_pipeline.py -step_name before_install
+  - BINTRAY_USER=solvingj
+  - GIT_REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+  - BINTRAY_REPO_DEB="public-deb"
+  - BINTRAY_REPO_RPM="public-rpm"
+  - BINTRAY_REPO_TARGZ="public-targz"
+  - BINTRAY_REPO_CONAN="public-conan"
+  - PKG_VERSION="0.0.1"
+  - secure: GZS7xkayTFDsyIhM+vCemlQFd0/oP6OZBbhEp/1v35y87YJJ7QxdKfGHtwaXiDgb/jfB41JIOq0rzv0jEiQYrscw96AugIc56p44TgcLr/o5ib9lEGgi1BA08fA6RTEm1kVpT3T0nuvoMEZXs5PtVEC5bKcDEHXqhajtyr7EFMOUgGT8vsOpz6WZ7ehdBaRPVB8394EkBExJnHQqqhjALqQrm8HbVFhVOdY4E12/puJCcYmrIM0pdWrEAkNUsmr7l7u/cvE3Tc9IuzQxGIFwUkpwWPEsHXIiGgEO6PUJDWkwkPzW5qRrTHGtItWioqWlHjelie+2lkqk/cjwSSB3qmT5pJ8QNjUPoPU91SBNyjloxdih/+AKdVTBSCy7Jd8I7ZHeKxUv4BFaoMgRAdrmp8tnS2KcgH0dbY1VX84Me+ORB0pf7itn1ZcEql7pZeYyo0Fc3pg/Ch5liIa6Smp4a1hA6dfezB2F2tDNkGBPj1IvgHaovrurvF9semUHBnI7LT6s6gPKk9+ZV9v5z4vhnQtbXMnFYyaKbemqc4uqQAhZ8Iqc/F4O5kiCIm2UEwzsu6TOrVXLTyUegR6JJvLnGUXIYdHqfUjZtYWYxDloJaaQKW7oa96dmND5MaVUHZ7xAtnpWZ7rj0Q0OGp3EdTdN4IDqD+ob7thQ0D9/yUqiuo=
+
+  before_install: sudo python ci/travis_pipeline.py -step_name before_install
 install: sudo python ci/travis_pipeline.py -step_name install
 script: sudo python ci/travis_pipeline.py -step_name script
 after_success: sudo python ci/travis_pipeline.py -step_name after_success
