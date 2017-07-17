@@ -2,7 +2,7 @@ import os, argparse
 
 # Please read pipeline_instructions.py before working on this file
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
-REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
+GIT_REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
 BINTRAY_USER = os.environ["BINTRAY_USER"]
@@ -10,7 +10,7 @@ BINTRAY_KEY = os.environ["BINTRAY_KEY"]
 BINTRAY_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
 BINTRAY_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
-PKG_NAME = REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
+PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -43,7 +43,7 @@ def deploy_script():
   os.system("curl -fsSk -o jfrog.exe -L https://api.bintray.com/content/jfrog/jfrog-cli-go/%24latest/jfrog-cli-windows-amd64/jfrog.exe?bt_package=jfrog-cli-windows-amd64")
   
   os.system("jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
-  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + REPO_NAME + "/"
+  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
   msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_REPO_MSI + "/" + bintray_path
   nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_REPO_NUPKG + "/" + bintray_path
