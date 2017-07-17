@@ -49,10 +49,10 @@ def deploy():
   
   bintray_path = + "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
-  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_DEB + " " + bintray_path
-  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_RPM + " " + bintray_path
-  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_TARGZ + " " + bintray_path
-  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_CONAN + " " + bintray_path
+  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_DEB + " " + bintray_path
+  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_SUBJECT + "/" +  BINTRAY_REPO_RPM + " " + bintray_path
+  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_SUBJECT + "/" +  BINTRAY_REPO_TARGZ + " " + bintray_path
+  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_CONAN + " " + bintray_path
   
   upload_bintray(deb_upload_suffix)
   upload_bintray(rpm_upload_suffix)
