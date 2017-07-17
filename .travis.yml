@@ -13,8 +13,8 @@ os:
 env:
   matrix:
     #ARCH="all"
-    ARCH="amd64"
-    ARCH="i386"
+    - ARCH="amd64"
+    - ARCH="i386"
 
   global:
     #Eventually change to PKG_VERSION=${TRAVIS_TAG}

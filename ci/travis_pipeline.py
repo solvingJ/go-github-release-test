@@ -42,7 +42,7 @@ def package():
 def deploy():
   print("Downloading JFrog CLI")
   os.system("curl -fL https://getcli.jfrog.io | sh")
-  os.system("jfrog config --user ${BINTRAY_USER} --key ${BINTRAY_KEY} --license MIT")
+  os.system("./jfrog config --user ${BINTRAY_USER} --key ${BINTRAY_KEY} --license MIT")
   
   deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB
   rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + PKG_NAME + "/" + PKG_VERSION
@@ -82,7 +82,7 @@ def package_conan():
     
 def upload_bintray(upload_suffix):
   print("Uploading files to Bintray with suffix: " + upload_suffix)
-  upload_prefix = "jfrog bt upload --override --publish "
+  upload_prefix = "./jfrog bt upload --override --publish "
   os.system(upload_prefix + upload_suffix)
     
 # This actually executes the step, must be after all methods are defined.
