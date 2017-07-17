@@ -40,9 +40,10 @@ def after_build():
   
 def deploy_script():
   print("Downloading JFrog CLI")
-  os.system("curl -fL https://getcli.jfrog.io | sh")
-  os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
-  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + PKG_NAME + "/"
+  os.system("curl -fsSk -o jfrog.exe -L https://api.bintray.com/content/jfrog/jfrog-cli-go/%24latest/jfrog-cli-windows-amd64/jfrog.exe?bt_package=jfrog-cli-windows-amd64")
+  
+  os.system("jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
+  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + REPO_NAME + "/"
   
   msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_REPO_MSI + "/" + bintray_path
   nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_REPO_NUPKG + "/" + bintray_path
