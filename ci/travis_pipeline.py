@@ -5,12 +5,13 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["GIT_REPO_NAME"]
 ARCH = os.environ["ARCH"]
-BINTRAY_USER = os.environ["BINTRAY_USER"]
-BINTRAY_KEY = os.environ["BINTRAY_KEY"]
 BINTRAY_REPO_DEB = os.environ["BINTRAY_REPO_DEB"]
 BINTRAY_REPO_RPM = os.environ["BINTRAY_REPO_RPM"]
 BINTRAY_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
 BINTRAY_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
+BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
+BINTRAY_USER = os.environ["BINTRAY_USER"]
+BINTRAY_KEY = os.environ["BINTRAY_KEY"]
 PKG_VERSION = os.environ["PKG_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
@@ -46,12 +47,12 @@ def deploy():
   print("Configuring JFrog CLI with command: " + "./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   
-  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
+  bintray_path = + "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
-  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_REPO_DEB + "/" + bintray_path
-  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_REPO_RPM + "/" + bintray_path
-  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_REPO_RPM + "/" + bintray_path
-  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_REPO_RPM + "/" + bintray_path
+  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_DEB + " " + bintray_path
+  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_RPM + " " + bintray_path
+  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_TARGZ + " " + bintray_path
+  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_SUBJECT + "/"  BINTRAY_REPO_CONAN + " " + bintray_path
   
   upload_bintray(deb_upload_suffix)
   upload_bintray(rpm_upload_suffix)
@@ -77,7 +78,7 @@ def package_rpm():
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
   " -o " + PKG_NAME + ".rpm")
-  os.system("echo $PWD")
+  
   print("RPM command : " + "docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   

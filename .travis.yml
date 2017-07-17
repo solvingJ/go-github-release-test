@@ -11,13 +11,14 @@ env:
   - ARCH="amd64"
   - ARCH="i386"
   global:
-  - BINTRAY_USER=solvingj
   - GIT_REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+  - PKG_VERSION="0.0.1"
   - BINTRAY_REPO_DEB="public-deb"
   - BINTRAY_REPO_RPM="public-rpm"
   - BINTRAY_REPO_TARGZ="public-targz"
   - BINTRAY_REPO_CONAN="public-conan"
-  - PKG_VERSION="0.0.1"
+  - BINTRAY_SUBJECT=solvingj
+  - BINTRAY_USER=solvingj
   - secure: GZS7xkayTFDsyIhM+vCemlQFd0/oP6OZBbhEp/1v35y87YJJ7QxdKfGHtwaXiDgb/jfB41JIOq0rzv0jEiQYrscw96AugIc56p44TgcLr/o5ib9lEGgi1BA08fA6RTEm1kVpT3T0nuvoMEZXs5PtVEC5bKcDEHXqhajtyr7EFMOUgGT8vsOpz6WZ7ehdBaRPVB8394EkBExJnHQqqhjALqQrm8HbVFhVOdY4E12/puJCcYmrIM0pdWrEAkNUsmr7l7u/cvE3Tc9IuzQxGIFwUkpwWPEsHXIiGgEO6PUJDWkwkPzW5qRrTHGtItWioqWlHjelie+2lkqk/cjwSSB3qmT5pJ8QNjUPoPU91SBNyjloxdih/+AKdVTBSCy7Jd8I7ZHeKxUv4BFaoMgRAdrmp8tnS2KcgH0dbY1VX84Me+ORB0pf7itn1ZcEql7pZeYyo0Fc3pg/Ch5liIa6Smp4a1hA6dfezB2F2tDNkGBPj1IvgHaovrurvF9semUHBnI7LT6s6gPKk9+ZV9v5z4vhnQtbXMnFYyaKbemqc4uqQAhZ8Iqc/F4O5kiCIm2UEwzsu6TOrVXLTyUegR6JJvLnGUXIYdHqfUjZtYWYxDloJaaQKW7oa96dmND5MaVUHZ7xAtnpWZ7rj0Q0OGp3EdTdN4IDqD+ob7thQ0D9/yUqiuo=
 
   before_install: sudo python ci/travis_pipeline.py -step_name before_install

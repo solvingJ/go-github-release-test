@@ -4,11 +4,12 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
-CHOCO_KEY = os.environ["CHOCO_KEY"]
-BINTRAY_USER = os.environ["BINTRAY_USER"]
-BINTRAY_KEY = os.environ["BINTRAY_KEY"]
 BINTRAY_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
 BINTRAY_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
+BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
+BINTRAY_USER = os.environ["BINTRAY_USER"]
+BINTRAY_KEY = os.environ["BINTRAY_KEY"]
+CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
@@ -45,8 +46,8 @@ def deploy_script():
   os.system("jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
-  msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_REPO_MSI + "/" + bintray_path
-  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_REPO_NUPKG + "/" + bintray_path
+  msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_MSI + " " + bintray_path
+  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_NUPKG + " " + bintray_path
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
