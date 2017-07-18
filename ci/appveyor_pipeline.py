@@ -65,7 +65,7 @@ def package_msi():
   " --msi " +  PKG_NAME + ".msi")
   print("MSI command : " + package_cmd)
   os.system("RefreshEnv")
-  os.system('set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin"')
+  os.system(r'set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin')
   os.system(package_cmd)
     
 def package_nupkg():
