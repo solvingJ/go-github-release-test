@@ -21,6 +21,7 @@ args = parser.parse_args()
 
 def before_build():
   os.system("choco install go-msi")
+  os.system("RefreshEnv")
   
 def build_script():
   generator_name = '"' + os.environ["CMAKE_GENERATOR"] + '"'
@@ -60,24 +61,24 @@ def create_pkg_location(bt_repo_name):
   
 def package_msi():
   package_cmd=(
-  '"%GO_MSI_PATH%\go-msi" make' + 
+  "go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
   print("MSI command : " + '"' + package_cmd + '"')
-  os.system('"' + package_cmd + '"')
+  os.system(package_cmd)
     
 def package_nupkg():
   print("Packaging NUPKG")
   
   package_cmd=(
-  '"%GO_MSI_PATH%\go-msi" choco' + 
+  "go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
   " --output " + PKG_NAME + ".nupkg")
-  print("NUPKG command : " + '"' + package_cmd + '"')
-  os.system('"' + package_cmd + '"')
+  print("NUPKG command : " + package_cmd)
+  os.system(package_cmd)
   
 def install_jfrog_cli():
   install_command=("curl -fsSk -o jfrog.exe -L https://api.bintray.com/content/jfrog/jfrog-cli-go/%24latest/jfrog-cli-windows-amd64/jfrog.exe?bt_package=jfrog-cli-windows-amd64")
