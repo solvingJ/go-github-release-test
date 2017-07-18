@@ -60,7 +60,7 @@ def create_pkg_location(bt_repo_name):
 def package_msi():
   print("Packaging MSI")
   package_cmd=(
-  "%GO_MSI_PATH%\\go-msi make" + 
+  "'%GO_MSI_PATH%\\go-msi' make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
