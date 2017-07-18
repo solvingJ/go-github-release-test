@@ -10,7 +10,7 @@ BINTRAY_REPO_CHOCO = os.environ["BINTRAY_REPO_CHOCO"]
 BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
 BINTRAY_USER = os.environ["BINTRAY_USER"]
 BINTRAY_KEY = os.environ["BINTRAY_KEY"]
-#CHOCO_KEY = os.environ["CHOCO_KEY"]
+CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
@@ -19,8 +19,8 @@ parser.add_argument("-step_name")
 args = parser.parse_args()
 
 def before_build():
-  go_msi_path = "C:\Program Files\go-msi"
-  wix_path = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
+  go_msi_path = r"C:\Program Files\go-msi"
+  wix_path = r"C:\Program Files (x86)\WiX Toolset v3.11\bin"
   os.system("setx GO_MSI_PATH " + go_msi_path)
   os.system("setx WIX_PATH " + wix_path)
   new_path = os.environ["PATH"] +  os.pathsep + go_msi_path + os.pathsep + wix_path
