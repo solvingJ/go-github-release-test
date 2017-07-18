@@ -4,12 +4,12 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
-BINTRAY_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
-BINTRAY_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
-BINTRAY_REPO_CHOCO = os.environ["BINTRAY_REPO_CHOCO"]
-BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
-BINTRAY_USER = os.environ["BINTRAY_USER"]
-BINTRAY_KEY = os.environ["BINTRAY_KEY"]
+BT_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
+BT_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
+BT_REPO_CHOCO = os.environ["BINTRAY_REPO_CHOCO"]
+BT_SUBJECT = os.environ["BINTRAY_SUBJECT"]
+BT_USER = os.environ["BINTRAY_USER"]
+BT_KEY = os.environ["BINTRAY_KEY"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
@@ -29,23 +29,34 @@ def build_script():
   os.system("cmake --build . --config " + CONFIGURATION)
     
 def after_build():
+  print("Running package_msi()")
   package_msi()
+  print("Running package_nupkg()")
   package_nupkg() 
   
 def deploy_script():
+  print("Running install_jfrog_cli()")
   install_jfrog_cli()
+  print("Running config_jfrog_cli()")
   config_jfrog_cli()
-  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
+
+  bt_path = create_pkg_path()
   
-  msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_MSI + " " + bintray_path
-  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_NUGET + " " + bintray_path
-  choco_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_CHOCO + " " + bintray_path
+  msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + bt_path
+  nupkg_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + bt_path
+  choco_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + bt_path
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
   upload_bintray(choco_upload_suffix)
   #upload_choco()
+  
+def create_pkg_path():
+  return "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
 
+def create_pkg_location(bt_repo_name):
+  return BT_SUBJECT + "/" + bt_repo_name + "/"  + GIT_REPO_NAME + "/" + PKG_VERSION
+  
 def package_msi():
   print("Packaging MSI")
   package_cmd=(
