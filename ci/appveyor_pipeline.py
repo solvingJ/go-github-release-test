@@ -18,9 +18,9 @@ parser.add_argument("-step_name")
 args = parser.parse_args()
 
 def before_build():
-  GO_MSI_PATH = "C:\Program Files\go-msi"
-  WIX_PATH = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
-  os.environ["PATH"] +=  os.pathsep + GO_MSI_PATH + os.pathsep + WIX_PATH
+  go_msi_path = "C:\Program Files\go-msi"
+  wix_path = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
+  os.environ["PATH"] +=  os.pathsep + go_msi_path + os.pathsep + wix_path
 
 def build_script():
   generator_name = os.environ["CMAKE_GENERATOR"]
