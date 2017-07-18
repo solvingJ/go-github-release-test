@@ -85,8 +85,8 @@ def install_jfrog_cli():
   
 def config_jfrog_cli():
   configure_command=(
-  "jfrog bt config --user " + BINTRAY_USER + 
-  " --key " + BINTRAY_KEY + 
+  "jfrog bt config --user " + BT_USER + 
+  " --key " + BT_KEY + 
   " --licenses MIT")
   print("Configuring jfrog client for bintray uploads with command: " + configure_command)
   os.system(configure_command)
