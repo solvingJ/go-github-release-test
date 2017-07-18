@@ -29,6 +29,7 @@ def build_script():
   os.system("cmake --build . --config " + CONFIGURATION)
     
 def after_build():
+  os.system("RefreshEnv")
   print("Running package_msi()")
   package_msi()
   print("Running package_nupkg()")
@@ -64,13 +65,10 @@ def package_msi():
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
   print("MSI command : " + package_cmd)
-  os.system("RefreshEnv")
-  os.system(r'set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin')
+  os.system(r'set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin"')
   os.system(package_cmd)
     
 def package_nupkg():
-  print("Packaging NUPKG")
-  
   package_cmd=(
   "RefreshEnv && go-msi choco" + 
   " --path msi-creation-data.json" +
@@ -78,7 +76,6 @@ def package_nupkg():
   " --input " + PKG_NAME + ".msi"
   " --out " + PKG_NAME + ".nupkg")
   print("NUPKG command : " + package_cmd)
-  os.system("RefreshEnv")
   os.system(package_cmd)
   
 def install_jfrog_cli():
