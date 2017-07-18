@@ -73,8 +73,7 @@ def package_nupkg():
   "refreshenv && go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --input " + PKG_NAME + ".msi"
-  " --out .")
+  " --input " + PKG_NAME + ".msi")
   print("NUPKG command : " + package_cmd)
   os.system(package_cmd)
   
