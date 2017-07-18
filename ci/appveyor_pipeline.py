@@ -19,6 +19,7 @@ parser.add_argument("-step_name")
 args = parser.parse_args()
 
 def before_build():
+  os.system(r'set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin"')
   os.system("choco install go-msi")
 
 def build_script():
@@ -65,7 +66,6 @@ def package_msi():
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
   print("MSI command : " + package_cmd)
-  os.system(r'set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin"')
   os.system(package_cmd)
     
 def package_nupkg():
