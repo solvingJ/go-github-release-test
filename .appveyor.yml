@@ -7,7 +7,7 @@ environment:
   BINTRAY_REPO_NUGET : public-nuget
   BINTRAY_REPO_CHOCO : public-choco
   BINTRAY_SUBJECT : solvingj
-  GO_MSI_PATH : C:\Program Files\go-msi
+  GO_MSI_PATH : C:\Program Files\go-msi\go-msi.exe
   matrix:
     - ARCH: x86
       CMAKE_GENERATOR: Visual Studio 15 2017
