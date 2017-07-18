@@ -23,7 +23,7 @@ def before_build():
   os.environ["PATH"] +=  os.pathsep + go_msi_path + os.pathsep + wix_path
 
 def build_script():
-  generator_name = os.environ["CMAKE_GENERATOR"]
+  generator_name = '"' + os.environ["CMAKE_GENERATOR"] + '"'
   os.system("md build")
   os.chdir("build")
   os.system("cmake -G " + generator_name + " ../src")
