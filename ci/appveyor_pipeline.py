@@ -21,13 +21,7 @@ def before_build():
   GO_MSI_PATH = "C:\Program Files\go-msi"
   WIX_PATH = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
 
-  if ARCH == "x86":
-    os.environ["CMAKE_GENERATOR_NAME"] = "Visual Studio 15 2017"
-  elif ARCH == "x64":
-    os.environ["CMAKE_GENERATOR_NAME"] = "Visual Studio 15 2017 Win64"
-    
-  print("ARCH = " + ARCH)
-  print("GENERATOR NAME = " + os.environ["CMAKE_GENERATOR_NAME"])
+  print("CMAKE_GENERATOR_NAME = " + os.environ["CMAKE_GENERATOR_NAME"])
   os.environ["PATH"] +=  os.pathsep + GO_MSI_PATH + os.pathsep + WIX_PATH
 
 def build_script():
