@@ -43,8 +43,6 @@ def deploy_script():
   install_jfrog_cli()
   print("Running config_jfrog_cli()")
   config_jfrog_cli()
-
-  bt_path = create_pkg_path()
   
   msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
   nupkg_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
