@@ -23,7 +23,7 @@ def before_build():
   wix_path = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
   os.system("setx GO_MSI_PATH " + go_msi_path)
   os.system("setx WIX_PATH " + wix_path)
-  new_path = os.environ["PATH"] +=  os.pathsep + go_msi_path + os.pathsep + wix_path
+  new_path = os.environ["PATH"] +  os.pathsep + go_msi_path + os.pathsep + wix_path
   os.system("setx PATH " + new_path)
   
 def build_script():
