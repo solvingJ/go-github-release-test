@@ -20,12 +20,10 @@ args = parser.parse_args()
 def before_build():
   GO_MSI_PATH = "C:\Program Files\go-msi"
   WIX_PATH = "C:\Program Files (x86)\WiX Toolset v3.11\bin"
-
-  print("CMAKE_GENERATOR_NAME = " + os.environ["CMAKE_GENERATOR_NAME"])
   os.environ["PATH"] +=  os.pathsep + GO_MSI_PATH + os.pathsep + WIX_PATH
 
 def build_script():
-  generator_name = os.environ["CMAKE_GENERATOR_NAME"]
+  generator_name = os.environ["CMAKE_GENERATOR"]
   os.system("md build")
   os.chdir("build")
   os.system("cmake -G " + generator_name + " ../src")
