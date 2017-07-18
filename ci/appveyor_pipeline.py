@@ -33,8 +33,10 @@ def after_build():
   package_nupkg() 
   
 def deploy_script():
-  install_jfrog_cli()
-  config_jfrog_cli()
+  print("Downloading JFrog CLI")
+  os.system("curl -fsSk -o jfrog.exe -L https://api.bintray.com/content/jfrog/jfrog-cli-go/%24latest/jfrog-cli-windows-amd64/jfrog.exe?bt_package=jfrog-cli-windows-amd64")
+  
+  os.system("jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
   bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
   msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_MSI + " " + bintray_path
@@ -66,19 +68,6 @@ def package_nupkg():
   " --output " + PKG_NAME + ".nupkg")
   print("NUPKG command : " + package_cmd)
   os.system(package_cmd)
-  
-def install_jfrog_cli():
-  install_command=("curl -fsSk -o jfrog.exe -L https://api.bintray.com/content/jfrog/jfrog-cli-go/%24latest/jfrog-cli-windows-amd64/jfrog.exe?bt_package=jfrog-cli-windows-amd64")
-  print("Installing jfrog client with command: " + install_command)
-  os.system(install_command)
-  
-def config_jfrog_cli():
-  configure_command=(
-  "jfrog bt config --user " + BINTRAY_USER + 
-  " --key " + BINTRAY_KEY + 
-  " --licenses MIT")
-  print("Configuring jfrog client for bintray uploads with command: " + configure_command)
-  os.system(configure_command)
   
 def upload_bintray(upload_cmd_suffix):
   upload_cmd_prefix = "jfrog bt upload --override --publish "
