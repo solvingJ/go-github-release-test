@@ -13,6 +13,8 @@ BT_KEY = os.environ["BINTRAY_KEY"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
+PKG_NAME_CHOCO = GIT_REPO_NAME + "." + PKG_VERSION
+PKG_PATH = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -44,18 +46,15 @@ def deploy_script():
 
   bt_path = create_pkg_path()
   
-  msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + bt_path
-  nupkg_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + bt_path
-  choco_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + bt_path
+  msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
+  nupkg_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
+  choco_upload_suffix = PKG_NAME_CHOCO + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
   upload_bintray(choco_upload_suffix)
   #upload_choco()
   
-def create_pkg_path():
-  return "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
-
 def create_pkg_location(bt_repo_name):
   return BT_SUBJECT + "/" + bt_repo_name + "/"  + GIT_REPO_NAME + "/" + PKG_VERSION
   
