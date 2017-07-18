@@ -64,7 +64,7 @@ def package_msi():
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
-  print("MSI command : " + package_cmd)
+  print("MSI command : " + '"' + package_cmd + '"')
   os.system('"' + package_cmd + '"')
     
 def package_nupkg():
@@ -76,7 +76,7 @@ def package_nupkg():
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
   " --output " + PKG_NAME + ".nupkg")
-  print("NUPKG command : " + package_cmd)
+  print("NUPKG command : " + '"' + package_cmd + '"')
   os.system('"' + package_cmd + '"')
   
 def install_jfrog_cli():
