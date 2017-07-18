@@ -61,7 +61,7 @@ def create_pkg_location(bt_repo_name):
   
 def package_msi():
   package_cmd=(
-  "refresh env && go-msi make" + 
+  "refreshenv && go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
@@ -70,7 +70,7 @@ def package_msi():
     
 def package_nupkg():
   package_cmd=(
-  "refresh env && go-msi choco" + 
+  "refreshenv && go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
