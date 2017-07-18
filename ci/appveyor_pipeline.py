@@ -20,11 +20,6 @@ args = parser.parse_args()
 
 def before_build():
   os.system("choco install go-msi")
-  go_msi_path = r"C:\Program Files\go-msi"
-  wix_path = r"C:\Program Files (x86)\WiX Toolset v3.11\bin"
-  os.system("setx GO_MSI_PATH " + '"' + go_msi_path + '"')
-  os.system("setx WIX_PATH " + '"' + wix_path + '"' )
-  os.system("setx PATH " + '"' + "%PATH%" +  os.pathsep + go_msi_path + os.pathsep + wix_path + '"')
   
 def build_script():
   generator_name = '"' + os.environ["CMAKE_GENERATOR"] + '"'
@@ -56,7 +51,7 @@ def deploy_script():
 def package_msi():
   print("Packaging MSI")
   package_cmd=(
-  "go-msi make" + 
+  "%GO_MSI_PATH%\\go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
@@ -66,7 +61,7 @@ def package_msi():
 def package_nupkg():
   print("Packaging NUPKG")
   package_cmd=(
-  "go-msi choco" + 
+  "%GO_MSI_PATH%\\go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
