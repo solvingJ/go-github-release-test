@@ -4,7 +4,6 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
-GO_MSI_PATH = os.environ["GO_MSI_PATH"]
 BT_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
 BT_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
 BT_REPO_CHOCO = os.environ["BINTRAY_REPO_CHOCO"]
