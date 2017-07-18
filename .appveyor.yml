@@ -3,16 +3,16 @@ image: Visual Studio 2017
 environment:
   MSVC_DEFAULT_OPTIONS : ON
   PKG_VERSION : 0.0.1
-  BINTRAY_REPO_MSI : "public-msi"
-  BINTRAY_REPO_NUGET : "public-nuget"
-  BINTRAY_REPO_CHOCO : "public-choco"
-  BINTRAY_SUBJECT : "solvingj"
-  GO_MSI_PATH : "C:\\Program Files\\go-msi"
+  BINTRAY_REPO_MSI : public-msi
+  BINTRAY_REPO_NUGET : public-nuget
+  BINTRAY_REPO_CHOCO : public-choco
+  BINTRAY_SUBJECT : solvingj
+  GO_MSI_PATH : 'C:\Program Files\go-msi'
   matrix:
     - ARCH: x86
-      CMAKE_GENERATOR: "Visual Studio 15 2017"
+      CMAKE_GENERATOR: Visual Studio 15 2017
     # - ARCH: x64
-      # CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+      # CMAKE_GENERATOR: Visual Studio 15 2017 Win64
       
 configuration:
   - Release
