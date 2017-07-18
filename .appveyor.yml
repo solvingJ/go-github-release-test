@@ -5,6 +5,7 @@ environment:
   PKG_VERSION : 0.0.1
   BINTRAY_REPO_MSI : "public-msi"
   BINTRAY_REPO_NUGET : "public-nuget"
+  BINTRAY_REPO_NUGET : "public-choco"
   BINTRAY_SUBJECT : "solvingj"
   matrix:
     - ARCH: x86

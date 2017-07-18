@@ -42,9 +42,11 @@ def deploy_script():
   
   msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_MSI + " " + bintray_path
   nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_NUGET + " " + bintray_path
+  choco_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_CHOCO + " " + bintray_path
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
+  upload_bintray(choco_upload_suffix)
   #upload_choco()
 
 def package_msi():
@@ -69,7 +71,7 @@ def package_nupkg():
   os.system(package_cmd)
   
 def upload_bintray(upload_cmd_suffix):
-  upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  upload_cmd_prefix = "jfrog bt upload --override --publish "
   print("Uploading file to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
   
