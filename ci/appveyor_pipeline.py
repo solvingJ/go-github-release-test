@@ -20,8 +20,7 @@ args = parser.parse_args()
 
 def before_build():
   os.system("choco install go-msi")
-  os.system("RefreshEnv")
-  
+
 def build_script():
   generator_name = '"' + os.environ["CMAKE_GENERATOR"] + '"'
   os.system("md build")
@@ -60,11 +59,13 @@ def create_pkg_location(bt_repo_name):
   
 def package_msi():
   package_cmd=(
-  "RefreshEnv && go-msi make" + 
+  "go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
-  print("MSI command : " + '"' + package_cmd + '"')
+  print("MSI command : " + package_cmd)
+  os.system("RefreshEnv")
+  os.system('set PATH "%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin"')
   os.system(package_cmd)
     
 def package_nupkg():
@@ -75,8 +76,9 @@ def package_nupkg():
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
-  " --output " + PKG_NAME + ".nupkg")
+  " --out " + PKG_NAME + ".nupkg")
   print("NUPKG command : " + package_cmd)
+  os.system("RefreshEnv")
   os.system(package_cmd)
   
 def install_jfrog_cli():
