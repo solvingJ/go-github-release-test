@@ -19,6 +19,7 @@ parser.add_argument("-step_name")
 args = parser.parse_args()
 
 def before_build():
+  os.system("choco install go-msi")
   go_msi_path = r"C:\Program Files\go-msi"
   wix_path = r"C:\Program Files (x86)\WiX Toolset v3.11\bin"
   os.system("setx GO_MSI_PATH " + '"' + go_msi_path + '"')
