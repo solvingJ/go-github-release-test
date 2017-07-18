@@ -41,7 +41,7 @@ def deploy_script():
   bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
   
   msi_upload_suffix = PKG_NAME + ".msi " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_MSI + " " + bintray_path
-  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_NUPKG + " " + bintray_path
+  nupkg_upload_suffix = PKG_NAME + ".nupkg " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_NUGET + " " + bintray_path
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
