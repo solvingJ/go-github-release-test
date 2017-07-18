@@ -4,6 +4,7 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["APPVEYOR_PROJECT_NAME"]
 ARCH = os.environ["ARCH"]
+GO_MSI_PATH = os.environ["GO_MSI_PATH"]
 BT_REPO_MSI = os.environ["BINTRAY_REPO_MSI"]
 BT_REPO_NUGET = os.environ["BINTRAY_REPO_NUGET"]
 BT_REPO_CHOCO = os.environ["BINTRAY_REPO_CHOCO"]
@@ -59,10 +60,9 @@ def create_pkg_location(bt_repo_name):
   
 def package_msi():
   print("Packaging MSI")
-  os.system("echo PATH1 = %GO_MSI_PATH%")
-  os.system('dir "%GO_MSI_PATH%"')
+  print("Path = " + '"' + GO_MSI_PATH + "\\go-msi" + '"' + " make")
   package_cmd=(
-  '"%GO_MSI_PATH%\\go-msi\" make' + 
+  '"' + GO_MSI_PATH + "\\go-msi" + '"' + " make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME + ".msi")
@@ -71,7 +71,7 @@ def package_msi():
     
 def package_nupkg():
   print("Packaging NUPKG")
-  os.system("echo %GO_MSI_PATH%")
+  
   package_cmd=(
   '"%GO_MSI_PATH%\\go-msi\" choco' + 
   " --path msi-creation-data.json" +
