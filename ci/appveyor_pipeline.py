@@ -74,7 +74,7 @@ def package_nupkg():
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME + ".msi"
-  " --out " + PKG_NAME + ".nupkg")
+  " --out .")
   print("NUPKG command : " + package_cmd)
   os.system(package_cmd)
   
