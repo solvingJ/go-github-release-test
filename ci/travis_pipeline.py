@@ -59,7 +59,7 @@ def deploy():
   
   deb_upload_suffix = deb_option + " " + PKG_NAME_DEB + " " + create_pkg_location(BT_REPO_DEB) + " " + PKG_PATH_DEB
   # rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
-  rpm_upload_suffix = "(*.rpm)" + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
+  rpm_upload_suffix = r'(*.rpm)' + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
   targz_upload_suffix = PKG_NAME_TARGZ + " " +  create_pkg_location(BT_REPO_TARGZ) + " " + PKG_PATH_TARGZ
   conan_upload_suffix = PKG_NAME_CONAN + " " +  create_pkg_location(BT_REPO_CONAN) + " " + PKG_PATH_CONAN
   
