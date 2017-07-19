@@ -12,7 +12,7 @@ BINTRAY_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
 BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
 BINTRAY_USER = os.environ["BINTRAY_USER"]
 BINTRAY_KEY = os.environ["BINTRAY_KEY"]
-PKG_VERSION = os.environ["PKG_VERSION"]
+PKG_VERSION = os.environ["TRAVIS_JOB_NUMBER"] + os.environ["TRAVIS_BUILD_NUMBER"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 
 parser = argparse.ArgumentParser()
