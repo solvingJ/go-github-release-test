@@ -14,8 +14,8 @@ CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
 PKG_PATH = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
-PKG_NAME_CHOCO = GIT_REPO_NAME + "." + PKG_VERSION
-PKG_PATH_CHOCO = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/" + ARCH + "/"
+PKG_NAME_NUGET = GIT_REPO_NAME + "." + PKG_VERSION
+PKG_PATH_NUGET = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/" + ARCH + "/"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -46,8 +46,8 @@ def deploy_script():
   config_jfrog_cli()
   
   msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
-  nupkg_upload_suffix = PKG_NAME + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
-  choco_upload_suffix = PKG_NAME_CHOCO + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
+  nupkg_upload_suffix = PKG_NAME_NUGET + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH_NUGET
+  choco_upload_suffix = PKG_NAME_NUGET + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH_NUGET
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
