@@ -13,8 +13,8 @@ BT_KEY = os.environ["BINTRAY_KEY"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
 PKG_PATH = GIT_REPO_NAME + "/" + ARCH + "/"
-MSI_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION + ".msi"
-NUGET_NAME = GIT_REPO_NAME + "." + PKG_VERSION + ".nupkg"
+PKG_NAME_MSI = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION + ".msi"
+PKG_NAME_NUPKG = GIT_REPO_NAME + "." + PKG_VERSION + ".nupkg"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -44,9 +44,9 @@ def deploy_script():
   print("Running config_jfrog_cli()")
   config_jfrog_cli()
   
-  msi_upload_suffix = MSI_NAME + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
-  nupkg_upload_suffix = NUGET_NAME + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
-  choco_upload_suffix = NUGET_NAME + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
+  msi_upload_suffix = PKG_NAME_MSI + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
+  nupkg_upload_suffix = PKG_NAME_NUPKG + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
+  choco_upload_suffix = PKG_NAME_NUPKG + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
@@ -61,7 +61,7 @@ def package_msi():
   "refreshenv && go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --msi " +  MSI_NAME)
+  " --msi " +  PKG_NAME_MSI)
   print("MSI command : " + package_cmd)
   os.system(package_cmd)
     
@@ -70,7 +70,7 @@ def package_nupkg():
   "refreshenv && go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --input " + MSI_NAME)
+  " --input " + PKG_NAME_MSI)
   print("NUPKG command : " + package_cmd)
   os.system(package_cmd)
   
@@ -93,7 +93,7 @@ def upload_bintray(upload_cmd_suffix):
   os.system(upload_cmd_prefix + upload_cmd_suffix)
   
 def upload_choco():
-  choco_upload_cmd = "choco push -k=" + CHOCO_KEY + " " + NUPKG_NAME
+  choco_upload_cmd = "choco push -k=" + CHOCO_KEY + " " + PKG_NAME_NUPKG
   print("Uploading file to Chocolatey with command: " + choco_upload_cmd)
   os.system(choco_upload_cmd)
   

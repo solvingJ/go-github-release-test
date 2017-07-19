@@ -5,15 +5,23 @@ import os, argparse
 CONFIGURATION = os.environ["CONFIGURATION"] if "CONFIGURATION" in os.environ else "Release"
 GIT_REPO_NAME = os.environ["GIT_REPO_NAME"]
 ARCH = os.environ["ARCH"]
-BINTRAY_REPO_DEB = os.environ["BINTRAY_REPO_DEB"]
-BINTRAY_REPO_RPM = os.environ["BINTRAY_REPO_RPM"]
-BINTRAY_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
-BINTRAY_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
-BINTRAY_SUBJECT = os.environ["BINTRAY_SUBJECT"]
-BINTRAY_USER = os.environ["BINTRAY_USER"]
-BINTRAY_KEY = os.environ["BINTRAY_KEY"]
+BT_REPO_DEB = os.environ["BINTRAY_REPO_DEB"]
+BT_REPO_RPM = os.environ["BINTRAY_REPO_RPM"]
+BT_REPO_TARGZ = os.environ["BINTRAY_REPO_TARGZ"]
+BT_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
+BT_SUBJECT = os.environ["BINTRAY_SUBJECT"]
+BT_USER = os.environ["BINTRAY_USER"]
+BT_KEY = os.environ["BINTRAY_KEY"]
 PKG_VERSION = os.environ["TRAVIS_JOB_NUMBER"] + "." + os.environ["TRAVIS_BUILD_NUMBER"]
+PKG_PATH_DEB = "unstable/main/" + ARCH + "/"
+PKG_PATH_RPM = GIT_REPO_NAME + "/" + ARCH + "/"
+PKG_PATH_TARGZ = PKG_PATH_RPM
+PKG_PATH_CONAN = PKG_PATH_RPM #Don't actually know about this yet
 PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
+PKG_NAME_DEB = PKG_NAME + ".deb"
+PKG_NAME_RPM = PKG_NAME + ".rpm"
+PKG_NAME_TARGZ = PKG_NAME + ".targz"
+PKG_NAME_CONAN = PKG_NAME + ".zip" #Don't actually know about this yet
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -44,20 +52,21 @@ def package():
 def deploy():
   print("Downloading JFrog CLI")
   os.system("curl -fL https://getcli.jfrog.io | sh")
-  print("Configuring JFrog CLI with command: " + "./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
-  os.system("./jfrog bt config --user " + BINTRAY_USER + " --key " + BINTRAY_KEY + " --licenses MIT")
+  print("Configuring JFrog CLI with command: " + "./jfrog bt config --user " + BT_USER + " --key " + BT_KEY + " --licenses MIT")
+  os.system("./jfrog bt config --user " + BT_USER + " --key " + BT_KEY + " --licenses MIT")
   
-  bintray_path = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
-  
-  deb_upload_suffix = "--deb " + PKG_NAME + ".deb " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_DEB + " " + bintray_path
-  rpm_upload_suffix = PKG_NAME + ".rpm " + BINTRAY_SUBJECT + "/" +  BINTRAY_REPO_RPM + " " + bintray_path
-  targz_upload_suffix = PKG_NAME + ".tar.gz " + BINTRAY_SUBJECT + "/" +  BINTRAY_REPO_TARGZ + " " + bintray_path
-  conan_upload_suffix = PKG_NAME + ".zip " + BINTRAY_SUBJECT + "/" + BINTRAY_REPO_CONAN + " " + bintray_path
+  deb_upload_suffix = "--deb " + PKG_NAME_DEB + " " + create_pkg_location(BT_REPO_DEB) + " " + PKG_PATH_DEB
+  rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
+  targz_upload_suffix = PKG_NAME_TARGZ + " " +  create_pkg_location(BT_REPO_TARGZ) + " " + PKG_PATH_TARGZ
+  conan_upload_suffix = PKG_NAME_CONAN + " " +  create_pkg_location(BT_REPO_CONAN) + " " + PKG_PATH_CONAN
   
   upload_bintray(deb_upload_suffix)
   upload_bintray(rpm_upload_suffix)
   #upload_bintray(targz_upload_suffix)
   #upload_bintray(conan_upload_suffix)
+  
+def create_pkg_location(bt_repo_name):
+  return BT_SUBJECT + "/" + bt_repo_name + "/"  + GIT_REPO_NAME + "/" + PKG_VERSION
   
 def package_deb():
   print("Packaging DEB")
@@ -66,7 +75,7 @@ def package_deb():
   " --file deb-creation-data.json" +
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
-  " -o " + PKG_NAME + ".deb")
+  " -o " + PKG_NAME_DEB)
   print("DEB command : " + package_cmd)
   os.system(package_cmd)
     
@@ -77,7 +86,7 @@ def package_rpm():
   " --file rpm-creation-data.json" +
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
-  " -o " + PKG_NAME + ".rpm")
+  " -o " + PKG_NAME_RPM)
   
   print("RPM command : " + "docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
   os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
@@ -89,7 +98,7 @@ def package_conan():
   print("No instructions for conan packaging yet")
     
 def upload_bintray(upload_cmd_suffix):
-  upload_cmd_prefix = "./jfrog bt upload --override --publish "
+  upload_cmd_prefix = "./jfrog bt upload --override=true --publish=true "
   print("Uploading files to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
     
