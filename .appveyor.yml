@@ -1,5 +1,5 @@
 image: Visual Studio 2017
- 
+
 environment:
   MSVC_DEFAULT_OPTIONS : ON
   BINTRAY_REPO_MSI : public-msi

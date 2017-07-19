@@ -97,6 +97,5 @@ def upload_choco():
   print("Uploading file to Chocolatey with command: " + choco_upload_cmd)
   os.system(choco_upload_cmd)
   
-  
 # This actually executes the step, must be after all methods are defined.
 exec(args.step_name + "()")
