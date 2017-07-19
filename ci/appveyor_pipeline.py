@@ -12,10 +12,9 @@ BT_USER = os.environ["BINTRAY_USER"]
 BT_KEY = os.environ["BINTRAY_KEY"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
-PKG_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION
-PKG_PATH = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
-PKG_NAME_NUGET = GIT_REPO_NAME + "." + PKG_VERSION
-PKG_PATH_NUGET = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/" + ARCH + "/"
+PKG_PATH = GIT_REPO_NAME + "/" + ARCH + "/"
+MSI_NAME = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION + ".msi"
+NUGET_NAME = GIT_REPO_NAME + "." + PKG_VERSION + ".nupkg"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
@@ -45,9 +44,9 @@ def deploy_script():
   print("Running config_jfrog_cli()")
   config_jfrog_cli()
   
-  msi_upload_suffix = PKG_NAME + ".msi" + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
-  nupkg_upload_suffix = PKG_NAME_NUGET + ".nupkg" + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH_NUGET
-  choco_upload_suffix = PKG_NAME_NUGET + ".nupkg" + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH_NUGET
+  msi_upload_suffix = MSI_NAME + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
+  nupkg_upload_suffix = NUGET_NAME + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
+  choco_upload_suffix = NUGET_NAME + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
@@ -62,7 +61,7 @@ def package_msi():
   "refreshenv && go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --msi " +  PKG_NAME + ".msi")
+  " --msi " +  MSI_NAME)
   print("MSI command : " + package_cmd)
   os.system(package_cmd)
     
@@ -71,7 +70,7 @@ def package_nupkg():
   "refreshenv && go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
-  " --input " + PKG_NAME + ".msi")
+  " --input " + MSI_NAME)
   print("NUPKG command : " + package_cmd)
   os.system(package_cmd)
   
