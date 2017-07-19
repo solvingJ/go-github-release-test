@@ -13,7 +13,7 @@ BT_SUBJECT = os.environ["BINTRAY_SUBJECT"]
 BT_USER = os.environ["BINTRAY_USER"]
 BT_KEY = os.environ["BINTRAY_KEY"]
 PKG_VERSION = os.environ["TRAVIS_JOB_NUMBER"]
-PKG_PATH_DEB = "unstable/main/" + ARCH + "/"
+PKG_PATH_DEB = "pool" + "/" + PKG_NAME[0] + "/" + GIT_REPO_NAME + "/"
 PKG_PATH_RPM = GIT_REPO_NAME + "/" + ARCH + "/"
 PKG_PATH_TARGZ = PKG_PATH_RPM
 PKG_PATH_CONAN = PKG_PATH_RPM #Don't actually know about this yet
@@ -55,8 +55,11 @@ def deploy():
   print("Running config_jfrog_cli()")
   config_jfrog_cli()
   
-  deb_upload_suffix = "--deb " + PKG_NAME_DEB + " " + create_pkg_location(BT_REPO_DEB) + " " + PKG_PATH_DEB
-  rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
+  deb_option = "--deb=unstable/main/" + ARCH
+  
+  deb_upload_suffix = deb_option + " " + PKG_NAME_DEB + " " + create_pkg_location(BT_REPO_DEB) + " " + PKG_PATH_DEB
+  # rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
+  rpm_upload_suffix = "(*.rpm)" + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
   targz_upload_suffix = PKG_NAME_TARGZ + " " +  create_pkg_location(BT_REPO_TARGZ) + " " + PKG_PATH_TARGZ
   conan_upload_suffix = PKG_NAME_CONAN + " " +  create_pkg_location(BT_REPO_CONAN) + " " + PKG_PATH_CONAN
   
