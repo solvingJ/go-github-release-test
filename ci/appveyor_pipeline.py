@@ -20,9 +20,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
 args = parser.parse_args()
 
-def before_build():
-  os.system(r'setx PATH "C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%;"')
-  os.system("choco install go-msi")
+# def install():
+  # os.system(r'setx PATH "C:\Program Files (x86)\WiX Toolset v3.11\bin;%PATH%;"')
+  # os.system("choco install go-msi wix")
 
 def build_script():
   generator_name = '"' + os.environ["CMAKE_GENERATOR"] + '"'
@@ -32,7 +32,6 @@ def build_script():
   os.system("cmake --build . --config " + CONFIGURATION)
     
 def after_build():
-  os.system("RefreshEnv")
   print("Running package_msi()")
   package_msi()
   print("Running package_nupkg()")
@@ -58,7 +57,7 @@ def create_pkg_location(bt_repo_name):
   
 def package_msi():
   package_cmd=(
-  "refreshenv && go-msi make" + 
+  "go-msi make" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME_MSI)
@@ -67,7 +66,7 @@ def package_msi():
     
 def package_nupkg():
   package_cmd=(
-  "refreshenv && go-msi choco" + 
+  "go-msi choco" + 
   " --path msi-creation-data.json" +
   " --version " + PKG_VERSION +
   " --input " + PKG_NAME_MSI)
