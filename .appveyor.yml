@@ -15,7 +15,7 @@ environment:
 configuration:
   - Release
 
-before_build: python ci/appveyor_pipeline.py -step_name before_build
+install: choco install wixtoolset go-msi
 build_script: python ci/appveyor_pipeline.py -step_name build_script
 after_build: python ci/appveyor_pipeline.py -step_name after_build
 deploy_script: python ci/appveyor_pipeline.py -step_name deploy_script
