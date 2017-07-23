@@ -95,8 +95,8 @@ def package_rpm():
   " --arch " + ARCH + 
   " -o " + PKG_NAME_RPM)
   
-  print("RPM command : " + "\"" + docker_cmd_prefix + package_cmd + "\"")
-  os.system("\"" + docker_cmd_prefix + package_cmd + "\"")
+  print("RPM command : " + docker_cmd_prefix + "\"" + package_cmd + "\"")
+  os.system(docker_cmd_prefix + "\"" + package_cmd + "\"")
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
