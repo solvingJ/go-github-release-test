@@ -11,8 +11,8 @@ BT_SUBJECT = os.environ["BINTRAY_SUBJECT"]
 BT_USER = os.environ["BINTRAY_USER"]
 BT_KEY = os.environ["BINTRAY_KEY"]
 CHOCO_KEY = os.environ["CHOCO_KEY"]
-PKG_VERSION = os.environ["APPVEYOR_BUILD_VERSION"]
-PKG_PATH = GIT_REPO_NAME + "/" + ARCH + "/"
+PKG_VERSION = os.environ["APPVEYOR_REPO_TAG_NAME"]
+PKG_PATH = GIT_REPO_NAME + "/"
 PKG_NAME_MSI = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION + ".msi"
 PKG_NAME_NUPKG = GIT_REPO_NAME + "." + PKG_VERSION + ".nupkg"
 
@@ -43,22 +43,26 @@ def deploy_script():
   print("Running config_jfrog_cli()")
   config_jfrog_cli()
   
-  msi_upload_suffix = PKG_NAME_MSI + " " +  create_pkg_location(BT_REPO_MSI) + " " + PKG_PATH
-  nupkg_upload_suffix = PKG_NAME_NUPKG + " " +  create_pkg_location(BT_REPO_NUGET) + " " + PKG_PATH
-  choco_upload_suffix = PKG_NAME_NUPKG + " " +  create_pkg_location(BT_REPO_CHOCO) + " " + PKG_PATH
+  msi_upload_suffix = PKG_NAME_MSI + " " +  get_pkg_location_msi(BT_REPO_MSI) + " " + PKG_PATH
+  nupkg_upload_suffix = PKG_NAME_NUPKG + " " +  get_pkg_location_nuget(BT_REPO_NUGET) + " " + PKG_PATH
+  choco_upload_suffix = PKG_NAME_NUPKG + " " +  get_pkg_location_nuget(BT_REPO_CHOCO) + " " + PKG_PATH
   
   upload_bintray(msi_upload_suffix)
   upload_bintray(nupkg_upload_suffix)
   upload_bintray(choco_upload_suffix)
   #upload_choco()
   
-def create_pkg_location(bt_repo_name):
+def get_pkg_location_msi(bt_repo_name):
   return BT_SUBJECT + "/" + bt_repo_name + "/"  + GIT_REPO_NAME + "/" + PKG_VERSION
-  
+     
+def get_pkg_location_nuget(bt_repo_name):
+  return BT_SUBJECT + "/" + bt_repo_name + "/"  + GIT_REPO_NAME + "-" + ARCH + "/" + PKG_VERSION
+   
 def package_msi():
   package_cmd=(
   "refreshenv && go-msi make" + 
   " --path msi-creation-data.json" +
+  " --arch " + ARCH +
   " --version " + PKG_VERSION +
   " --msi " +  PKG_NAME_MSI)
   print("MSI command : " + package_cmd)
