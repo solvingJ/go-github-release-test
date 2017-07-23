@@ -12,7 +12,7 @@ BT_REPO_CONAN = os.environ["BINTRAY_REPO_CONAN"]
 BT_SUBJECT = os.environ["BINTRAY_SUBJECT"]
 BT_USER = os.environ["BINTRAY_USER"]
 BT_KEY = os.environ["BINTRAY_KEY"]
-PKG_VERSION = os.environ["TRAVIS_JOB_NUMBER"]
+PKG_VERSION = os.environ["PKG_VERSION"]
 PKG_PATH_DEB = "pool" + "/" + GIT_REPO_NAME[0] + "/" + GIT_REPO_NAME + "/"
 PKG_PATH_RPM = GIT_REPO_NAME + "/" + ARCH + "/"
 PKG_PATH_TARGZ = PKG_PATH_RPM
@@ -58,8 +58,7 @@ def deploy():
   deb_option = "--deb=unstable/main/" + ARCH
   
   deb_upload_suffix = deb_option + " " + PKG_NAME_DEB + " " + create_pkg_location(BT_REPO_DEB) + " " + PKG_PATH_DEB
-  # rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
-  rpm_upload_suffix = r'"(*.rpm)"' + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
+  rpm_upload_suffix = PKG_NAME_RPM + " " +  create_pkg_location(BT_REPO_RPM) + " " + PKG_PATH_RPM
   targz_upload_suffix = PKG_NAME_TARGZ + " " +  create_pkg_location(BT_REPO_TARGZ) + " " + PKG_PATH_TARGZ
   conan_upload_suffix = PKG_NAME_CONAN + " " +  create_pkg_location(BT_REPO_CONAN) + " " + PKG_PATH_CONAN
   
@@ -84,15 +83,20 @@ def package_deb():
     
 def package_rpm():
   print("Packaging RPM")
+ 
+  docker_cmd_prefix=(
+  "docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c "
+  )
+
   package_cmd=(
-  "go-bin-rpm generate" +
+  "cd /mnt/travis && go-bin-rpm generate" +
   " --file rpm-creation-data.json" +
   " --version " + PKG_VERSION + 
   " --arch " + ARCH + 
   " -o " + PKG_NAME_RPM)
   
-  print("RPM command : " + "docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
-  os.system("docker run -v $PWD:/mnt/travis solvingj/go-bin-rpm /bin/sh -c \"" + package_cmd + "\"")
+  print("RPM command : " + "\"" + docker_cmd_prefix + package_cmd + "\"")
+  os.system("\"" + docker_cmd_prefix + package_cmd + "\"")
   
 def package_targz():
   print("No instructions for conan packaging tar.gz")
@@ -114,7 +118,7 @@ def config_jfrog_cli():
   os.system(configure_command)
   
 def upload_bintray(upload_cmd_suffix):
-  upload_cmd_prefix = "./jfrog bt upload --override=true --publish=true "
+  upload_cmd_prefix = "./jfrog bt upload --override=true "
   print("Uploading files to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
     
