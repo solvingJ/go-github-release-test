@@ -14,7 +14,7 @@ CHOCO_KEY = os.environ["CHOCO_KEY"]
 PKG_VERSION = os.environ["APPVEYOR_REPO_TAG_NAME"]
 PKG_PATH = GIT_REPO_NAME + "/"
 PKG_NAME_MSI = GIT_REPO_NAME + "-" + ARCH + "-" + PKG_VERSION + ".msi"
-PKG_NAME_NUPKG = GIT_REPO_NAME + "." + PKG_VERSION + ".nupkg"
+PKG_NAME_NUPKG = GIT_REPO_NAME + "-" + ARCH  + "." + PKG_VERSION + ".nupkg"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-step_name")
