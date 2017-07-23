@@ -91,7 +91,7 @@ def config_jfrog_cli():
   os.system(configure_command)
   
 def upload_bintray(upload_cmd_suffix):
-  upload_cmd_prefix = "jfrog bt upload --override=true --publish=true "
+  upload_cmd_prefix = "jfrog bt upload --override=true "
   print("Uploading file to Bintray with command: " + upload_cmd_prefix + upload_cmd_suffix)
   os.system(upload_cmd_prefix + upload_cmd_suffix)
   
